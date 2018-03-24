@@ -36,6 +36,8 @@
         This will create first user on your forum - main Administrator's account.
         <input class="form-control" placeholder="Administrator's username" v-model="adminName">
         <br>
+        <input class="form-control" type="email" placeholder="Administrator's Email" v-model="adminEmail">
+        <br>
         <input type="password" class="form-control" placeholder="Administrator's password" v-model="adminPass">
         <br>
         <input type="password" class="form-control" placeholder="Repeat administrator's password" v-model="adminPass2">
@@ -113,6 +115,10 @@ export default {
         return this.error('Please, enter forum administrator username');
       }
 
+      if (!this.adminEmail) {
+        return this.error('Please, enter forum administrator email');
+      }
+
       if (!this.adminPass || !this.adminPass2) {
         return this.error('Please, enter administrator password');
       }
@@ -128,7 +134,8 @@ export default {
       this.$http.post('/api/install/', {
         config: this.config,
         adminName: this.adminName,
-        adminPass: this.adminPass
+        adminPass: this.adminPass,
+        adminEmail: this.adminEmail
       }).then(response => {
         if (!response.body.success) {
           this.error(response.body.message);

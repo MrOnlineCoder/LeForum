@@ -21,7 +21,7 @@
       <br>
       <b-alert variant="danger" :show="err">Error: {{ errMsg }}</b-alert>
       <br>
-      <b-button type="submit" variant="success" @click="login()">Login</b-button>
+      <b-button type="submit" variant="success" @click="login()" :disabled="busy">{{ busy ? 'Please wait..' : 'Login'}}</b-button>
     </b-form-group>
     </b-form>
     <br>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import Session from '../services/session'
 
 export default {
   data () {
@@ -40,13 +41,15 @@ export default {
       score: 0,
       errMsg: "",
       err: false,
-      page_title: 'Login'
+      page_title: 'Login',
+      busy: false
     }
   },
   methods: {
-    error(msg) { 
+    error(msg) {
       this.err = true;
       this.errMsg = msg;
+      this.busy = false;
       return false;
     },
     login() {
@@ -54,6 +57,7 @@ export default {
         return this.error('Please, fill in all fields!');
       }
 
+      this.busy = true;
       this.$http.post('/api/auth/login', {
         email: this.form.email,
         password: this.form.password
@@ -64,8 +68,14 @@ export default {
           return this.error(body.message);
         }
 
-        alert(body.token);
+        Session.setToken(body.token);
+        this.$router.push('/home');
       });
+    },
+    created() {
+      if (Session.isLoggedIn()) {
+        this.$router.push('/home');
+      }
     }
   },
 }

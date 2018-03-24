@@ -1,0 +1,60 @@
+{
+    "name": "MyForumTest",
+    "description": "Test",
+    "userGroups": {
+        "superadmin": {
+            "title": "Super Admin",
+            "color": "#F44336",
+            "permission": [
+                "*"
+            ]
+        },
+        "admin": {
+            "title": "Administrator",
+            "color": "#E65100",
+            "permission": [
+                "read",
+                "post",
+                "rate",
+                "avatar",
+                "signature",
+                "modify_others",
+                "delete_posts",
+                "close_threads",
+                "delete_threads",
+                "modify",
+                "ban"
+            ]
+        },
+        "moderator": {
+            "title": "Moderator",
+            "color": "#9C27B0",
+            "permission": [
+                "read",
+                "post",
+                "rate",
+                "avatar",
+                "signature",
+                "modify",
+                "modify_others",
+                "delete_posts",
+                "close_threads"
+            ]
+        },
+        "user": {
+            "title": "User",
+            "color": "#000000",
+            "permission": [
+                "read",
+                "post",
+                "rate",
+                "avatar",
+                "signature",
+                "modify"
+            ]
+        }
+    },
+    "tokenSecret": "63577905-0149-43c2-9037-12136d9d4a9f",
+    "brandURL": "http://placehold.it/75",
+    "present": true
+}

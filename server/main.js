@@ -17,7 +17,9 @@ const DB = require('./db');
 
 const InstallAPI = require('./install');
 const InfoAPI = require('./info');
-const AuthAPI = require('./auth').router;
+const AuthAPI = require('./auth');
+
+const PrivateAPI = require('./private');
 
 let app = null;
 
@@ -36,7 +38,7 @@ function listenHTTP() {
 
 function setupServer() {
   app = express();
-  app.use(express.static(path.resolve(__dirname, '../public')));
+  app.use(express.static(path.resolve(__dirname, '../dist')));
 
   app.use(morgan("dev"));
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,7 +46,8 @@ function setupServer() {
 
   app.use('/api/install', InstallAPI);
   app.use('/api/info', InfoAPI);
-  app.use('/api/auth', AuthAPI);
+  app.use('/api/auth', AuthAPI.router);
+  app.use('/api/private', PrivateAPI);
 
   winston.info('[Main] Created Express application');
 }

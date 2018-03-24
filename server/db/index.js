@@ -41,7 +41,7 @@ const UserSchema = new mongoose.Schema({
  },
  posts: Number,
  reputation: Number,
- accessLevel: Number
+ group: String
 });
 
 var User = mongoose.model("users", UserSchema);

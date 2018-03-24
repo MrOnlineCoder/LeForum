@@ -10,8 +10,10 @@ import HomeView from './views/Home.vue'
 import InstallView from './views/Install.vue'
 import RegisterView from './views/Register.vue'
 import LoginView from './views/Login.vue'
+import StaffView from './views/Staff.vue'
 
 import InfoService from './services/info'
+import Session from './services/session'
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -21,6 +23,7 @@ const routes = [
   { path: '/home', component: HomeView },
   { path: '/install', component: InstallView },
   { path: '/register', component: RegisterView },
+  { path: '/staff', component: StaffView },
   { path: '/login', component: LoginView },
   { path: '*', redirect: '/home' }
 ];
@@ -40,21 +43,24 @@ function runApp() {
 
 function registerDirectives() {
   Vue.directive('title', (el, binding) => {
-      console.log(binding);
       document.title = binding.value+' - '+InfoService.get().name;
   });
 }
 
 let services = 0;
-const SERVICES_COUNT = 1;
+const SERVICES_COUNT = 2;
+
 //Initialize all services and then run
 function serviceCallback() {
   services++;
+  console.log('Registered service #'+services);
 
-  if (services => SERVICES_COUNT) {
+  if (services == SERVICES_COUNT) {
+    console.log('Services registered, launching application...');
     registerDirectives();
     runApp();
   }
 }
 
 InfoService.init(serviceCallback);
+Session.init(serviceCallback);

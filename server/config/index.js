@@ -7,60 +7,88 @@
 
 const fs = require('fs');
 const winston = require('winston');
+const Permissions = require('../permissions');
 
 let config = {};
+let securityToken = '';
+
+const configPath = 'forum_config.json';
 
 function isConfigPresent() {
-  return (fs.existsSync('config.json'));
+  return (fs.existsSync(configPath));
 }
 
 function saveConfig() {
-  fs.writeFile('config.json', JSON.stringify(config, null, 4), function(err) {
+  fs.writeFile(configPath, JSON.stringify(config, null, 4), function(err) {
     if(err) {
       winston.error('[Config] Failed to write config: '+err);
       return;
     }
 
-    winston.info("[Config] Saved new config.");
+    winston.info('[Config] Saved new config.');
   });
 }
 
 function resetConfig() {
   config = {
-    name: "LeForum",
-    description: "None"
+    name: 'LeForum',
+    description: 'None',
+    userGroups: {
+      superadmin: {
+        title: 'Super Admin',
+        color: '#F44336',
+        permission: ['*']
+      },
+      admin: {
+        title: 'Administrator',
+        color: '#E65100',
+        permission: ['read', 'post', 'rate', 'avatar', 'signature', 'modify_others', 'delete_posts', 'close_threads', 'delete_threads', 'ban']
+      },
+      moderator: {
+        title: 'Moderator',
+        color: '#9C27B0',
+        permission: ['read', 'post', 'rate', 'avatar', 'signature', 'modify_others', 'delete_posts', 'close_threads']
+      },
+      user: {
+        title: 'User',
+        color: '#000000',
+        permission: ['read', 'post', 'rate', 'avatar', 'signature', 'modify']
+      }
+    }
   };
 
   winston.info('[Config] Setting default config!');
 }
 
 function setConfig(cfg) {
-  config = cfg;
+  Object.assign(config, cfg);
   config.present = true;
 }
 
 function getSecurityToken() {
-  return config.tokenSecret;
+  return securityToken;
 }
 
 function load() {
-  fs.readFile('config.json', 'utf8', function(err, contents) {
+  fs.readFile(configPath, 'utf8', function(err, contents) {
       if (err) {
-        winson.error('[Config Fatal] Failed to load config: '+err);
+        winston.error('[Config Fatal] Failed to load config: '+err);
         process.exit(1);
       }
 
       config = JSON.parse(contents);
+
+      securityToken = config.tokenSecret;
+
+      //Remove token secret from config object, which is exposed to public
+      delete config.tokenSecret;
+
+      Permissions.init(config.userGroups);
   });
 }
 
 function get() {
-  let res = config;
-
-  //Make sure token secret is not exposed somewhere
-  delete res.tokenSecret;
-
-  return res;
+  return config;
 }
 
 module.exports = {

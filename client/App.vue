@@ -3,9 +3,8 @@
     <div v-if="!isInstallRoute">
       <Header></Header>
       <Navbar></Navbar>
-      <hr>
     </div>
-
+    <br>
     <router-view></router-view>
   </div>
 </template>

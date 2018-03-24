@@ -21,6 +21,23 @@ function register(data, cb) {
   });
 }
 
+function existsId(id, cb) {
+  User.findById(id, (err, doc) => {
+    if (err) {
+      winston.error('[UserService] Failed to find user by ID '+id+': '+err);
+      cb(false, null);
+      return;
+    }
+
+    if (!doc) {
+      cb(false, null);
+      return;
+    }
+
+    cb(true, doc);
+  });
+}
+
 function exists(username, email, cb) {
   User.find({$or: [
     {
@@ -61,12 +78,13 @@ function getLoginUser(email, password, cb) {
       return;
     }
 
-    cb(true, docs);
+    cb(true, docs[0]);
   });
 }
 
 module.exports = {
   register,
   exists,
+  existsId,
   getLoginUser
 };

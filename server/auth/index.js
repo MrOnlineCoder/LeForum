@@ -22,12 +22,51 @@ function generateToken(user) {
   return token;
 }
 
-function verifyToken(token) {
+function decodeToken(token, cb) {
+  jwt.verify(token, Config.getSecurityToken(), function(err, decoded) {
+    if (err) {
+      winston.error('[Auth] Failed to decode token '+token);
+      cb(null);
+      return;
+    }
 
+    cb(decoded.id);
+  });
 }
 
 function privateAPI(req,res,next) {
+  if (!req.query.token && !req.body.token) {
+    res.json({
+      success: false,
+      message: 'Access denied.'
+    });
+    return;
+  }
 
+  var token = req.query.token || req.body.token;
+
+  decodeToken(token, (user) => {
+    if (!user) {
+      res.json({
+        success: false,
+        message: 'Cannot decode token.'
+      });
+      return;
+    }
+
+    UserService.existsId(user, (ok, doc) => {
+      if (!ok) {
+        res.json({
+          success: false,
+          message: 'Failed to check user existance.'
+        });
+        return;
+      }
+
+      req.user = doc;
+      next();
+    });
+  });
 }
 
 router.post('/register', (req,res) => {
@@ -38,7 +77,7 @@ router.post('/register', (req,res) => {
   data.registered = new Date();
   data.posts = 0;
   data.reputation = 0;
-  data.accessLevel = 0;
+  data.group = 'user';
   data.lastSeen = new Date();
 
   data.password = Utils.toSHA256(data.password);
@@ -57,6 +96,7 @@ router.post('/register', (req,res) => {
         success: false,
         message: 'Error while searching for user on registration: '+err
       });
+      winston.error('[AuthAPI] Register failed, cannot check user existance: '+err);
       return;
     }
 
@@ -66,6 +106,7 @@ router.post('/register', (req,res) => {
           success: false,
           message: 'Error saving user document: '+err
         });
+        winston.error('[AuthAPI] Register failed, cannot save new document: '+err);
         return;
       }
 
@@ -89,6 +130,8 @@ router.post('/login', (req,res) => {
       return;
     }
 
+    winston.info('[AuthAPI] User '+email+' logged in.');
+
     let token = generateToken(doc);
     res.json({
       success: true,
@@ -96,6 +139,7 @@ router.post('/login', (req,res) => {
     });
   });
 });
+
 
 module.exports = {
   router,

@@ -7,13 +7,21 @@
 
 import Vue  from 'vue'
 
+let groups = {};
 let info = {};
 
 function init(cb) {
   Vue.http.get('/api/info/general').then(response => {
     info = response.body;
 
-    cb.call();
+    console.log('General info loaded.');
+    Vue.http.get('/api/info/userGroups').then(response => {
+      groups = response.body;
+
+      console.log('User groups loaded.');
+      console.log('InfoService created. Present: '+info.present);
+      cb.call();
+    });
   });
 }
 
@@ -25,8 +33,13 @@ function get() {
   return info;
 }
 
+function getGroups() {
+  return groups;
+}
+
 export default {
   get,
   init,
-  isPresent
+  isPresent,
+  groups
 };

@@ -14,6 +14,7 @@
       <b-navbar-nav>
         <b-nav-item><router-link class="nav-link" to="/home">Home</router-link></b-nav-item>
         <b-nav-item><router-link class="nav-link" to="/rules">Rules</router-link></b-nav-item>
+        <b-nav-item><router-link class="nav-link" to="/staff">Staff</router-link></b-nav-item>
         <b-nav-item><router-link class="nav-link" to="/profile">Profile</router-link></b-nav-item>
       </b-navbar-nav>
 
@@ -25,19 +26,19 @@
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
         </b-nav-form>
 
-        <b-nav-item-dropdown right v-if="loggedIn">
+        <b-nav-item-dropdown right v-if="isLoggedIn">
           <!-- Using button-content slot -->
           <template slot="button-content">
-            <b>Username</b>
+            <b>{{ username }}</b>
           </template>
           <b-dropdown-item href="#">Settings</b-dropdown-item>
-          <b-dropdown-item href="#">Report a bug</b-dropdown-item>
-          <b-dropdown-item href="#">Logout</b-dropdown-item>
+          <b-dropdown-item href="https://github.com/MrOnlineCoder/LeForum/issues">Report a bug</b-dropdown-item>
+          <b-dropdown-item href="#" @click='logout()'>Logout</b-dropdown-item>
         </b-nav-item-dropdown>
 
         &nbsp;
 
-        <b-nav-form v-if="!loggedIn">
+        <b-nav-form v-if="!isLoggedIn">
           <router-link to="/login">Login</router-link>
           &nbsp;
           or
@@ -54,18 +55,37 @@
 <script>
 
 import InfoService from '../services/info'
+import Session from '../services/session'
 
 export default {
   data() {
     return {
-      loggedIn: false,
       name: "",
       brandURL: "",
+      username: "",
+      isLoggedIn: false
+    }
+  },
+  methods: {
+    logout() {
+      Session.logout();
+      this.isLoggedIn = false;
+
+      this.$router.push('/login');
+    },
+    sessionCallback() {
+      this.isLoggedIn = Session.isLoggedIn();
     }
   },
   created() {
+    Session.setCallback(this.sessionCallback);
     this.name = InfoService.get().name;
     this.brandURL = InfoService.get().brandURL;
+
+    if (Session.isLoggedIn()) {
+      this.username = Session.getUser().username;
+      this.isLoggedIn = true;
+    }
   }
 }
 </script>
