@@ -12,9 +12,12 @@ import RegisterView from './views/Register.vue'
 import LoginView from './views/Login.vue'
 import StaffView from './views/Staff.vue'
 import ProfileView from './views/Profile.vue'
+import AdminView from './views/Admin.vue'
 
 import InfoService from './services/info'
 import Session from './services/session'
+
+import Utils from './services/utils'
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -26,7 +29,9 @@ const routes = [
   { path: '/register', component: RegisterView },
   { path: '/staff', component: StaffView },
   { path: '/login', component: LoginView },
+  { path: '/profile/:id', component: ProfileView },
   { path: '/profile', component: ProfileView },
+  { path: '/admincp', component: AdminView },
   { path: '*', redirect: '/home' }
 ];
 
@@ -41,6 +46,11 @@ function runApp() {
     router,
     render: (h) => h(App)
   }).$mount('#app');
+}
+
+function registerFilters() {
+  Vue.filter('formatDate', Utils.formatDate);
+  Vue.filter('formatGroupTitle', InfoService.getGroupTitle);
 }
 
 function registerDirectives() {
@@ -60,6 +70,7 @@ function serviceCallback() {
   if (services == SERVICES_COUNT) {
     console.log('Services registered, launching application...');
     registerDirectives();
+    registerFilters();
     runApp();
   }
 }

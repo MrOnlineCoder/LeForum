@@ -26,4 +26,21 @@ router.get('/staff', (req,res) => {
   });
 });
 
+router.get('/profile/:id', (req,res) => {
+  UserService.getByName(req.params.id, (ok, doc) => {
+    if (!ok) {
+      res.json({
+        success: false,
+        message: 'UserService error.'
+      });
+      return;
+    }
+
+    res.json({
+      success: true,
+      user: doc
+    });
+  });
+});
+
 module.exports = router;

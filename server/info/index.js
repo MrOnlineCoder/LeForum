@@ -19,4 +19,11 @@ router.get('/userGroups', (req,res) => {
   res.json(Permissions.getAll());
 });
 
+router.get('/permissions', (req,res) => {
+  res.json({
+    actions: Permissions.Actions,
+    hints: Permissions.ActionHints
+  });
+});
+
 module.exports = router;

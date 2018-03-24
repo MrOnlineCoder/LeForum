@@ -55,7 +55,7 @@ function resetConfig() {
       user: {
         title: 'User',
         color: '#000000',
-        staff: true, 
+        staff: true,
         permission: ['read', 'post', 'rate', 'avatar', 'signature', 'modify']
       }
     }
@@ -66,6 +66,7 @@ function resetConfig() {
 
 function setConfig(cfg) {
   Object.assign(config, cfg);
+  if (securityToken) config.tokenSecret = securityToken;
   config.present = true;
 }
 

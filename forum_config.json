@@ -30,7 +30,7 @@
         },
         "moderator": {
             "title": "Moderator",
-            "color": "#9C27B0",
+            "color": "#4CAF50",
             "staff": true,
             "permission": [
                 "read",
@@ -57,7 +57,7 @@
             ]
         }
     },
-    "tokenSecret": "63577905-0149-43c2-9037-12136d9d4a9f",
     "brandURL": "http://placehold.it/75",
-    "present": true
+    "present": true,
+    "tokenSecret": "8ab2-fd67-a12j-f889-ddd91"
 }

@@ -10,9 +10,9 @@ Feel free to collaborate - create an issue or pull request!
 
 * ~~Installation page~~
 * ~~Account registration~~
-* Account login with JWT
-* Profile page
-* Logout
+* ~~Account login with JWT~~
+* ~~Profile page~~
+* ~~Logout~~
 * Boards
 * Topics
 * Posts

@@ -7,7 +7,7 @@
     </b-alert>
     <b>Legend:</b>
     <ul>
-      <li v-for="it in groups" :style="{color: it.color}">{{ it.title }}</li>
+      <li v-for="it in groups" v-if="it.staff" :style="{color: it.color}">{{ it.title }}</li>
     </ul>
     <br>
     <UserTable :list="users"></UserTable>

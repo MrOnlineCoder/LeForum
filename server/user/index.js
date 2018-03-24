@@ -59,6 +59,18 @@ function existsId(id, cb) {
   });
 }
 
+function getByName(user, cb) {
+  User.findOne({username: user}, {password: 0, email: 0}, (err, doc) => {
+    if (err) {
+      winston.error('[UserService] Failed to find user by name '+username+': '+err);
+      cb(false, err);
+      return;
+    }
+
+    cb(true, doc);
+  });
+}
+
 function exists(username, email, cb) {
   User.find({$or: [
     {
@@ -108,5 +120,6 @@ module.exports = {
   exists,
   existsId,
   getLoginUser,
-  getStaff
+  getStaff,
+  getByName
 };

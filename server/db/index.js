@@ -31,9 +31,29 @@ const UserSchema = new mongoose.Schema({
  avatarURL: String
 });
 
-var User = mongoose.model("users", UserSchema);
+const TopicSchema = new mongoose.Schema({
+ title: String,
+ author: String,
+ date: Date,
+ open: Boolean,
+ category: String
+});
+
+const PostSchema = new mongoose.Schema({
+ content: String,
+ author: String,
+ date: Date,
+ topic: String,
+ likes: [String]
+});
+
+let User = mongoose.model("users", UserSchema);
+let Topic = mongoose.model("topics", TopicSchema);
+let Post = mongoose.model("posts", PostSchema);
 
 module.exports = {
   connect,
-  User
+  User,
+  Topic,
+  Post
 }

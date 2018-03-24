@@ -41,11 +41,16 @@ function getGroupColor(name) {
   return groups[name].color;
 }
 
+function getGroupTitle(name) {
+  return groups[name].title;
+}
+
 export default {
   get,
   init,
   isPresent,
   groups,
   getGroupColor,
-  getGroups
+  getGroups,
+  getGroupTitle
 };

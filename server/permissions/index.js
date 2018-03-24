@@ -19,8 +19,24 @@ const Actions = {
   DELETE_POSTS: 'delete_posts',
   DELETE_THREADS: 'delete_threads',
   CLOSE_THREADS: 'close_threads',
-  BAN: 'ban'
+  BAN: 'ban',
+  ACCESS_ADMIN: 'admin'
 };
+
+const ActionHints = {
+  READ_POSTS: 'Read posts in any topic',
+  POST: 'Post messages in topics',
+  RATE_OTHERS: 'Rate others\' posts',
+  SET_AVATAR: 'Have custom avatar',
+  SET_SIGNATURE: 'Set custom signature',
+  MODIFY_OTHERS: 'Modify others\' posts.',
+  MODIFY_SELF: 'Modify own posts',
+  DELETE_POSTS: 'Delete any post',
+  DELETE_THREADS: 'Delete topics',
+  CLOSE_THREADS: 'Close or reopen topics',
+  BAN: 'Ban other users',
+  ACCESS_ADMIN: 'Access this Admin panel'
+}
 
 function init(_groups) {
   groups = _groups;
@@ -63,6 +79,7 @@ module.exports = {
   init,
   hasPermission,
   Actions,
+  ActionHints,
   getAll,
   isStaff,
   getStaffGroups
