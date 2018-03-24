@@ -11,6 +11,7 @@ import InstallView from './views/Install.vue'
 import RegisterView from './views/Register.vue'
 import LoginView from './views/Login.vue'
 import StaffView from './views/Staff.vue'
+import ProfileView from './views/Profile.vue'
 
 import InfoService from './services/info'
 import Session from './services/session'
@@ -25,6 +26,7 @@ const routes = [
   { path: '/register', component: RegisterView },
   { path: '/staff', component: StaffView },
   { path: '/login', component: LoginView },
+  { path: '/profile', component: ProfileView },
   { path: '*', redirect: '/home' }
 ];
 

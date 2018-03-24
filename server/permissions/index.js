@@ -41,9 +41,29 @@ function hasPermission(user, perm) {
   return perms.includes(perm);
 }
 
+function isStaff(user) {
+  return !!groups[user.group].staff;
+}
+
+function getStaffGroups() {
+  let sgroups = [];
+
+  for (var k in groups) {
+    if (groups.hasOwnProperty(k)) {
+        if (groups[k].staff) {
+          sgroups.push(k);
+        }
+    }
+  }
+
+  return sgroups;
+}
+
 module.exports = {
   init,
   hasPermission,
   Actions,
-  getAll
+  getAll,
+  isStaff,
+  getStaffGroups
 };

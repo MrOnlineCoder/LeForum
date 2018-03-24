@@ -5,6 +5,7 @@
         "superadmin": {
             "title": "Super Admin",
             "color": "#F44336",
+            "staff": true,
             "permission": [
                 "*"
             ]
@@ -12,6 +13,7 @@
         "admin": {
             "title": "Administrator",
             "color": "#E65100",
+            "staff": true,
             "permission": [
                 "read",
                 "post",
@@ -29,6 +31,7 @@
         "moderator": {
             "title": "Moderator",
             "color": "#9C27B0",
+            "staff": true,
             "permission": [
                 "read",
                 "post",

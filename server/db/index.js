@@ -18,30 +18,17 @@ function connect(cb) {
 }
 
 const UserSchema = new mongoose.Schema({
- username: {
-  type: String
- },
- email: {
- 	type: String
- },
- password: {
- 	type: String
- },
- birth: {
- 	type: Date
- },
- country: {
-   type: String
- },
- registered: {
-  type: Date
- },
- lastSeen: {
-   type: Date
- },
+ username: String,
+ email: String,
+ password: String,
+ birth: Date,
+ country: String,
+ registered: Date,
+ lastSeen: Date,
  posts: Number,
  reputation: Number,
- group: String
+ group: String,
+ avatarURL: String
 });
 
 var User = mongoose.model("users", UserSchema);

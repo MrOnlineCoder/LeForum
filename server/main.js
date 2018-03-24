@@ -21,6 +21,8 @@ const AuthAPI = require('./auth');
 
 const PrivateAPI = require('./private');
 
+const UserAPI = require('./user/api.js');
+
 let app = null;
 
 function logFormatter(args) {
@@ -47,6 +49,7 @@ function setupServer() {
   app.use('/api/install', InstallAPI);
   app.use('/api/info', InfoAPI);
   app.use('/api/auth', AuthAPI.router);
+  app.use('/api/users', UserAPI);
   app.use('/api/private', PrivateAPI);
 
   winston.info('[Main] Created Express application');

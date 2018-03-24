@@ -8,6 +8,7 @@
 const User = require('../db').User;
 const winston = require('winston');
 const Utils = require('../utils');
+const Permissions = require('../permissions');
 
 function register(data, cb) {
   let user = new User(data);
@@ -18,6 +19,26 @@ function register(data, cb) {
     }
 
     cb(true, null);
+  });
+}
+
+function getStaff(cb)  {
+  let staffGroups = Permissions.getStaffGroups();
+  User.find({
+    group: {
+      $in: staffGroups
+    }
+  }, {
+    email: false,
+    password: false
+  }, (err, docs) => {
+    if (err) {
+      winston.error('[UserService] Failed to get staff users: '+err);
+      cb(false, null);
+      return;
+    }
+
+    cb(true, docs);
   });
 }
 
@@ -86,5 +107,6 @@ module.exports = {
   register,
   exists,
   existsId,
-  getLoginUser
+  getLoginUser,
+  getStaff
 };

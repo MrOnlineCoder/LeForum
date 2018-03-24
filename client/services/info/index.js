@@ -37,9 +37,15 @@ function getGroups() {
   return groups;
 }
 
+function getGroupColor(name) {
+  return groups[name].color;
+}
+
 export default {
   get,
   init,
   isPresent,
-  groups
+  groups,
+  getGroupColor,
+  getGroups
 };

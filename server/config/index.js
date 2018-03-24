@@ -37,21 +37,25 @@ function resetConfig() {
       superadmin: {
         title: 'Super Admin',
         color: '#F44336',
-        permission: ['*']
+        permission: ['*'],
+        staff: true
       },
       admin: {
         title: 'Administrator',
         color: '#E65100',
+        staff: true,
         permission: ['read', 'post', 'rate', 'avatar', 'signature', 'modify_others', 'delete_posts', 'close_threads', 'delete_threads', 'ban']
       },
       moderator: {
         title: 'Moderator',
         color: '#9C27B0',
+        staff: true,
         permission: ['read', 'post', 'rate', 'avatar', 'signature', 'modify_others', 'delete_posts', 'close_threads']
       },
       user: {
         title: 'User',
         color: '#000000',
+        staff: true, 
         permission: ['read', 'post', 'rate', 'avatar', 'signature', 'modify']
       }
     }
