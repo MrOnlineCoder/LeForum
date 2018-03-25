@@ -22,6 +22,13 @@
             Preview:
             <img :src="general.brandURL" width="100" height="100">
           </p>
+
+          <b-button variant="success" size="lg" @click="saveConfig()">Save configuration</b-button>
+          <br>
+          <br>
+          <b-alert variant="success" :show="ok">
+              New configuration applied.
+          </b-alert>
         </b-collapse>
       </div>
       <br>
@@ -31,12 +38,68 @@
           <PermissionsManager></PermissionsManager>
         </b-collapse>
       </div>
-
       <br>
-      <hr>
+      <div>
+        <b-btn v-b-toggle.collapse3 variant="primary">Edit forum rules</b-btn>
+        <b-collapse id="collapse3" class="mt-2">
+          <RuleEditor></RuleEditor>
+        </b-collapse>
+      </div>
+      <br>
+      <div>
+        <b-btn v-b-toggle.collapse4 variant="primary">Edit forum categories</b-btn>
+        <b-collapse id="collapse4" class="mt-2">
+          <CategoryEditor></CategoryEditor>
+        </b-collapse>
+      </div>
     </div>
-
+    <hr>
     <h2 v-if="busy">Please wait...</h2>
+
+    <div>
+      <h2>About LeForum</h2>
+      <b>version 1.0.0</b>
+      <br>
+      <code>
+        Copyright (c) 2018 Nikita Kogut (MrOnlineCoder)
+      </code>
+      <br>
+      <code>
+      All Rights Reserved.
+      </code>
+      <br>
+      <code>
+        Licnesed under Apache License 2.0.
+      </code>
+      <br>
+      Authors:
+      <ul>
+        <li> <a href="https://github.com/MrOnlineCoder">MrOnlineCoder</a> - creator, main developer</li>
+      </ul>
+      Used NPM packages (explicitly):
+      <ul>
+        <li>express</li>
+        <li>bootstrap-vue</li>
+        <li>camelcase</li>
+        <li>country-list</li>
+        <li>js-cookie</li>
+        <li>jsonwebtoken</li>
+        <li>marked</li>
+        <li>moment</li>
+        <li>morgan</li>
+        <li>sha.js</li>
+        <li>uuid</li>
+        <li>vue</li>
+        <li>vue-password</li>
+        <li>vue-quill-editor</li>
+        <li>vue-resource</li>
+        <li>vue-router</li>
+        <li>winston</li>
+      </ul>
+      I thank each author of these packages for their work.
+      <br>
+      <br>
+    </div>
   </div>
 </template>
 
@@ -45,6 +108,8 @@ import Session from '../services/session'
 import InfoService from '../services/info'
 
 import PermissionsManager from '../components/PermissionsManager.vue'
+import RuleEditor from '../components/RuleEditor.vue'
+import CategoryEditor from '../components/CategoryEditor.vue'
 
 export default {
   data() {
@@ -58,24 +123,16 @@ export default {
     }
   },
   methods: {
+    saveConfig() {
+      this.$http.post('/api/private/admin/setGeneral', {
+        token: Session.getToken(),
+        general: this.general
+      }).then(response => {
+        this.ok = true;
+      });
+    },
     load() {
       this.general = InfoService.get();
-    },
-    save() {
-      this.$http.post('/api/private/admin/update', {
-        token: Session.getToken(),
-        general: this.general,
-        permissions: this.groups
-      }).then(resp => {
-        if (!resp.body.success) {
-          this.err = true;
-          this.errorMsg = 'Failed to save changes: '+resp.body.message;
-          return;
-        }
-
-        this.ok = true;
-        this.err = false;
-      });
     }
   },
   created() {
@@ -101,7 +158,9 @@ export default {
     });
   },
   components: {
-    PermissionsManager
+    PermissionsManager,
+    RuleEditor,
+    CategoryEditor
   }
 }
 </script>

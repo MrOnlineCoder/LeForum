@@ -9,7 +9,6 @@
             <th scope="col">Color</th>
             <th scope="col">Is Staff</th>
             <th scope="col">Permissions</th>
-            <th scope="col">Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -19,7 +18,7 @@
             <td><p :style="{'color': groups[k].color}">Preview</p><input type="text" class="form-control" v-model="groups[k].color"></td>
             <td><input type="checkbox" v-model="groups[k].staff"></td>
             <td><b-button variant="primary" @click="openPermsModal(k)">Manage</b-button></td>
-            <td><b-button variant="danger" @click="removeGroup(k)">Remove</b-button></td>
+            <!--<td><b-button variant="danger" @click="removeGroup(k)">Remove</b-button></td>-->
           </tr>
         </tbody>
       </table>
@@ -27,13 +26,24 @@
       <b-modal ref="permModal" title="Manage group permissions" :ok-only="true">
         <div class="">
             <p>{{editGroup}} can:</p>
-            <li v-for="v,k in actions">
+            <b v-if="groups[editGroup].permission.includes('*')">Do everything and anything</b>
+            <li v-if="!groups[editGroup].permission.includes('*')" v-for="v,k in actions">
               <label v-b-popover.hover='v' title="Raw permission">
                 <input type="checkbox" :value="v" v-model="groups[editGroup].permission">
                 {{ permDescription(k) }}
               </label>
             </li>
           </ul>
+          <br>
+          <label>
+              Read level:
+              <input type="number" class="form-control" v-model="groups[editGroup].readLevel">
+          </label>
+          <br>
+          <label>
+              Write level:
+              <input type="number" class="form-control" v-model="groups[editGroup].writeLevel">
+          </label>
         </div>
       </b-modal>
       <b-button variant="success" size="lg" @click="save()">Save permissions</b-button>

@@ -1,5 +1,5 @@
 {
-    "name": "MyForumTest",
+    "name": "LeForumTest",
     "description": "Test",
     "userGroups": {
         "superadmin": {
@@ -8,7 +8,9 @@
             "staff": true,
             "permission": [
                 "*"
-            ]
+            ],
+            "readLevel": "100",
+            "writeLevel": "100"
         },
         "admin": {
             "title": "Administrator",
@@ -26,7 +28,9 @@
                 "delete_threads",
                 "modify",
                 "ban"
-            ]
+            ],
+            "readLevel": "3",
+            "writeLevel": "3"
         },
         "moderator": {
             "title": "Moderator",
@@ -42,7 +46,9 @@
                 "modify_others",
                 "delete_posts",
                 "close_threads"
-            ]
+            ],
+            "readLevel": "2",
+            "writeLevel": "2"
         },
         "user": {
             "title": "User",
@@ -54,10 +60,27 @@
                 "avatar",
                 "signature",
                 "modify"
-            ]
+            ],
+            "readLevel": "1",
+            "writeLevel": "1"
         }
     },
     "brandURL": "http://placehold.it/75",
     "present": true,
+    "categories": {
+        "features": {
+            "title": "Features Suggestions",
+            "description": "Miss a feature in a LeForum? Let us know about it!",
+            "readLevel": 0,
+            "writeLevel": 0
+        },
+        "bugs": {
+            "title": "Bug Reports",
+            "description": "Report a bug here!",
+            "readLevel": 0,
+            "writeLevel": 0
+        }
+    },
+    "rules": "<h1>LeForum Test rules dsfsdfsdfsdf</h1><p><br></p><h2>General</h2><ol><li>By registering and using our service, you automatically agree to follow theese rules</li><li>Rules can be changed by administrator anytime without any notification to users</li><li>Not knowing rules does not free you of responsibility</li></ol><p><br></p><blockquote>Created on 25.03.2018 by MrOnlineCoder</blockquote>",
     "tokenSecret": "8ab2-fd67-a12j-f889-ddd91"
 }
