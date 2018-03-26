@@ -16,6 +16,9 @@ import StaffView from './views/Staff.vue'
 import ProfileView from './views/Profile.vue'
 import AdminView from './views/Admin.vue'
 import RulesView from './views/Rules.vue'
+import CategoryView from './views/Category.vue'
+import NewTopicView from './views/NewTopic.vue'
+import TopicView from './views/Topic.vue'
 
 import InfoService from './services/info'
 import Session from './services/session'
@@ -44,6 +47,9 @@ const routes = [
   { path: '/profile', component: ProfileView },
   { path: '/admincp', component: AdminView },
   { path: '/rules', component: RulesView },
+  { path: '/category/:c', component: CategoryView },
+  { path: '/category/:c/new', component: NewTopicView },
+  { path: '/topic/:id', component: TopicView },
   { path: '*', redirect: '/home' }
 ];
 
@@ -62,6 +68,7 @@ function runApp() {
 
 function registerFilters() {
   Vue.filter('formatDate', Utils.formatDate);
+  Vue.filter('formatDateTime', Utils.formatDateTime);
   Vue.filter('formatGroupTitle', InfoService.getGroupTitle);
 }
 

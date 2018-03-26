@@ -7,6 +7,7 @@
 const winston = require('winston');
 
 let groups = [];
+let categories = [];
 
 const Actions = {
   READ_POSTS: 'read',
@@ -38,8 +39,9 @@ const ActionHints = {
   ACCESS_ADMIN: 'Access this Admin panel'
 }
 
-function init(_groups) {
+function init(_groups, _categories) {
   groups = _groups;
+  categories = _categories;
   winston.info('[Permissions] Loaded '+Object.keys(groups).length+' user groups.');
 }
 
@@ -75,6 +77,29 @@ function getStaffGroups() {
   return sgroups;
 }
 
+function canViewCategory(user, cat) {
+  let cl = categories[cat].readLevel;
+
+  if (!user) {
+    //if user is not given (client didn't login), allow only if readlevel is 0
+    return cl == 0;
+  }
+
+  let ul = groups[user.group].readLevel;
+
+
+  return ul >= cl;
+}
+
+function canPostToCategory(user, cat) {
+  if (!user) return;
+
+  let ul = groups[user.group].writeLevel;
+  let cl = categories[cat].writeLevel;
+
+  return ul >= cl;
+}
+
 module.exports = {
   init,
   hasPermission,
@@ -82,5 +107,7 @@ module.exports = {
   ActionHints,
   getAll,
   isStaff,
-  getStaffGroups
+  getStaffGroups,
+  canViewCategory,
+  canPostToCategory
 };

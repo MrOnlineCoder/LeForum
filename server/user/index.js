@@ -71,6 +71,26 @@ function getByName(user, cb) {
   });
 }
 
+function addPostCount(user, cb) {
+  User.update({username: user}, {
+    $inc: {
+      posts: 1
+    }
+  }, (err) => {
+    cb(!!err);
+  });
+}
+
+function addReputation(user, cb) {
+  User.update({username: user}, {
+    $inc: {
+      reputation: 1
+    }
+  }, (err) => {
+    cb(!!err);
+  });
+}
+
 function exists(username, email, cb) {
   User.find({$or: [
     {
@@ -92,6 +112,22 @@ function exists(username, email, cb) {
     }
 
     cb(true, null);
+  });
+}
+
+function usersFromList(arr, cb) {
+  User.find({
+    username: {
+      $in: arr
+    }
+  }, (err, docs) => {
+    if (err) {
+      winston.error('[UserService] Failed to find users for list: '+err);
+      cb(false, err);
+      return;
+    }
+
+    cb(true, docs);
   });
 }
 
@@ -121,5 +157,8 @@ module.exports = {
   existsId,
   getLoginUser,
   getStaff,
-  getByName
+  getByName,
+  addPostCount,
+  addReputation,
+  usersFromList
 };

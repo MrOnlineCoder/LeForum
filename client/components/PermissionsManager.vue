@@ -35,6 +35,8 @@
             </li>
           </ul>
           <br>
+          <p>Read and write levels determine what categories users in this group will be able to read and write (post) in.</p>
+          <br>
           <label>
               Read level:
               <input type="number" class="form-control" v-model="groups[editGroup].readLevel">

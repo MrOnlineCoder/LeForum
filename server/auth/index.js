@@ -34,6 +34,24 @@ function decodeToken(token, cb) {
   });
 }
 
+function getUserFromToken(token, cb) {
+  decodeToken(token, (user) => {
+    if (!user) {
+      cb(false, null);
+      return;
+    }
+
+    UserService.existsId(user, (ok, doc) => {
+      if (!ok) {
+        cb(true, null);
+        return;
+      }
+
+      cb(true, doc);
+    });
+  });
+}
+
 function privateAPI(req,res,next) {
   if (!req.query.token && !req.body.token) {
     res.json({
@@ -45,8 +63,8 @@ function privateAPI(req,res,next) {
 
   var token = req.query.token || req.body.token;
 
-  decodeToken(token, (user) => {
-    if (!user) {
+  getUserFromToken(token, (ok, user) => {
+    if (!ok) {
       res.json({
         success: false,
         message: 'Cannot decode token.'
@@ -54,18 +72,16 @@ function privateAPI(req,res,next) {
       return;
     }
 
-    UserService.existsId(user, (ok, doc) => {
-      if (!ok) {
-        res.json({
-          success: false,
-          message: 'Failed to check user existance.'
-        });
-        return;
-      }
+    if (!user) {
+      res.json({
+        success: false,
+        message: 'Failed to check user existance.'
+      });
+      return;
+    }
 
-      req.user = doc;
-      next();
-    });
+    req.user = user;
+    next();
   });
 }
 
@@ -143,5 +159,6 @@ router.post('/login', (req,res) => {
 
 module.exports = {
   router,
-  privateAPI
+  privateAPI,
+  getUserFromToken
 }

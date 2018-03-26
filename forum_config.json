@@ -65,7 +65,7 @@
             "writeLevel": "1"
         }
     },
-    "brandURL": "http://placehold.it/75",
+    "brandURL": "http://placehold.it/60",
     "present": true,
     "categories": {
         "features": {
@@ -77,7 +77,7 @@
         "bugs": {
             "title": "Bug Reports",
             "description": "Report a bug here!",
-            "readLevel": 0,
+            "readLevel": "1",
             "writeLevel": 0
         }
     },

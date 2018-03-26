@@ -96,7 +96,7 @@ function load() {
       //Remove token secret from config object, which is exposed to public
       delete config.tokenSecret;
 
-      Permissions.init(config.userGroups);
+      Permissions.init(config.userGroups, config.categories);
   });
 }
 

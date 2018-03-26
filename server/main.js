@@ -19,6 +19,9 @@ const InstallAPI = require('./install');
 const InfoAPI = require('./info');
 const AuthAPI = require('./auth');
 
+const TopicAPI = require('./topics/api.js');
+const PostsAPI = require('./posts/api.js');
+
 const PrivateAPI = require('./private');
 
 const UserAPI = require('./user/api.js');
@@ -50,6 +53,8 @@ function setupServer() {
   app.use('/api/info', InfoAPI);
   app.use('/api/auth', AuthAPI.router);
   app.use('/api/users', UserAPI);
+  app.use('/api/topics', TopicAPI);
+  app.use('/api/posts', PostsAPI);
   app.use('/api/private', PrivateAPI);
 
   winston.info('[Main] Created Express application');

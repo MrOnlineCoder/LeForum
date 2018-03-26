@@ -26,6 +26,11 @@ function adminMiddleware(req,res,next) {
   next();
 }
 
+function reinitPermissions() {
+  let config = Config.get();
+  Permissions.init(config.userGroups, config.categories);
+}
+
 router.get('/canAccess', AuthAPI.privateAPI, adminMiddleware, (req,res) => {
   res.json({
     success: true
@@ -37,6 +42,9 @@ router.post('/setPermissions', AuthAPI.privateAPI, adminMiddleware, (req,res) =>
     userGroups: req.body.groups
   });
   Config.saveConfig();
+
+  reinitPermissions();
+
   winston.info('[AdminAPI] Updated permisions configuration ('+req.user.username+')');
   res.json({
     success: true
@@ -59,6 +67,9 @@ router.post('/setCategories', AuthAPI.privateAPI, adminMiddleware, (req,res) => 
     categories: req.body.categories
   });
   Config.saveConfig();
+
+  reinitPermissions();
+
   winston.info('[AdminAPI] Updated categories ('+req.user.username+')');
   res.json({
     success: true
@@ -72,6 +83,17 @@ router.post('/setRules', AuthAPI.privateAPI, adminMiddleware, (req,res) => {
   });
   Config.saveConfig();
   winston.info('[AdminAPI] Updated rules ('+req.user.username+')');
+  res.json({
+    success: true
+  });
+});
+
+router.post('/setPostOptions', AuthAPI.privateAPI, adminMiddleware, (req,res) => {
+  Config.setConfig({
+    postOptions: req.body.options
+  });
+  Config.saveConfig();
+  winston.info('[AdminAPI] Updated posting options ('+req.user.username+')');
   res.json({
     success: true
   });

@@ -6,8 +6,8 @@
           <th scope="col">ID</th>
           <th scope="col">Title</th>
           <th scope="col">Description</th>
-          <th scope="col">Read Level</th>
-          <th scope="col">Write Level</th>
+          <th scope="col" v-b-tooltip.hover title="Read level determines which user groups will be able to read that category. Set to 0 to make it visible for everyone (including guests)">Read Level</th>
+          <th scope="col" v-b-tooltip.hover title="Write level determines which user groups will be able to post to that category">Write Level</th>
           <th scope="col">Remove</th>
           <th><b-button variant="success" @click="add()">Add</b-button></th>
         </tr>

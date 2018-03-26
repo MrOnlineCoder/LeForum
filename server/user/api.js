@@ -26,6 +26,23 @@ router.get('/staff', (req,res) => {
   });
 });
 
+router.post('/fromList', (req,res) => {
+  UserService.usersFromList(req.body.list, (ok, docs) => {
+    if (!ok) {
+      res.json({
+        success: false,
+        message: 'Failed to get users list.'
+      });
+      return;
+    }
+
+    res.json({
+      success: true,
+      users: docs
+    });
+  });
+});
+
 router.get('/profile/:id', (req,res) => {
   UserService.getByName(req.params.id, (ok, doc) => {
     if (!ok) {

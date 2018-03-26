@@ -4,9 +4,9 @@
              :img-src="user.avatarURL ? user.avatarURL : undefined"
              img-alt="User Avatar"
              img-top
-             class="mb-6">
+             style="height: 100%">
        <p class="card-text">
-         <span :style="{color: InfoService.getGroupColor(user.group), 'text-decoration': 'underline'}">{{ user.group | formatGroupTitle }}</span>
+         <a :href="'#/profile/'+user.username"><span :style="{color: InfoService.getGroupColor(user.group), 'text-decoration': 'underline'}">{{ user.group | formatGroupTitle }}</span></a>
          <br>
          Posts: <b>{{ user.posts }}</b>
          <br>

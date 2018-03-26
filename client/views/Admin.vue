@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <h1>LeForum Control Panel</h1>
-    <hr>
-    <div v-if="!busy">
-      <b-alert variant="danger" :show="err">
-          Error: {{ errorMsg }}
-      </b-alert>
-      <div>
-        <b-btn v-b-toggle.collapse1 variant="primary">General forum configuration</b-btn>
-        <b-collapse id="collapse1" class="mt-2">
+<div>
+  <h1>LeForum Control Panel</h1>
+  <hr>
+  <div v-if="!busy">
+    <b-alert variant="danger" :show="err">
+      Error: {{ errorMsg }}
+    </b-alert>
+    <div>
+      <b-tabs>
+        <b-tab title="General forum configuration" active>
           <label>Forum name:</label>
           <b-form-input size="sm" v-model="general.name"></b-form-input>
           <br>
@@ -27,80 +27,71 @@
           <br>
           <br>
           <b-alert variant="success" :show="ok">
-              New configuration applied.
+            New configuration applied.
           </b-alert>
-        </b-collapse>
-      </div>
-      <br>
-      <div>
-        <b-btn v-b-toggle.collapse2 variant="primary">User groups and permissions manager</b-btn>
-        <b-collapse id="collapse2" class="mt-2">
+        </b-tab>
+        <b-tab title="Permissions manager">
           <PermissionsManager></PermissionsManager>
-        </b-collapse>
-      </div>
-      <br>
-      <div>
-        <b-btn v-b-toggle.collapse3 variant="primary">Edit forum rules</b-btn>
-        <b-collapse id="collapse3" class="mt-2">
+        </b-tab>
+        <b-tab title="Rules editor">
           <RuleEditor></RuleEditor>
-        </b-collapse>
-      </div>
-      <br>
-      <div>
-        <b-btn v-b-toggle.collapse4 variant="primary">Edit forum categories</b-btn>
-        <b-collapse id="collapse4" class="mt-2">
+        </b-tab>
+        <b-tab title="Categories">
           <CategoryEditor></CategoryEditor>
-        </b-collapse>
-      </div>
-    </div>
-    <hr>
-    <h2 v-if="busy">Please wait...</h2>
-
-    <div>
-      <h2>About LeForum</h2>
-      <b>version 1.0.0</b>
-      <br>
-      <code>
-        Copyright (c) 2018 Nikita Kogut (MrOnlineCoder)
-      </code>
-      <br>
-      <code>
-      All Rights Reserved.
-      </code>
-      <br>
-      <code>
-        Licnesed under Apache License 2.0.
-      </code>
-      <br>
-      Authors:
-      <ul>
-        <li> <a href="https://github.com/MrOnlineCoder">MrOnlineCoder</a> - creator, main developer</li>
-      </ul>
-      Used NPM packages (explicitly):
-      <ul>
-        <li>express</li>
-        <li>bootstrap-vue</li>
-        <li>camelcase</li>
-        <li>country-list</li>
-        <li>js-cookie</li>
-        <li>jsonwebtoken</li>
-        <li>marked</li>
-        <li>moment</li>
-        <li>morgan</li>
-        <li>sha.js</li>
-        <li>uuid</li>
-        <li>vue</li>
-        <li>vue-password</li>
-        <li>vue-quill-editor</li>
-        <li>vue-resource</li>
-        <li>vue-router</li>
-        <li>winston</li>
-      </ul>
-      I thank each author of these packages for their work.
-      <br>
-      <br>
+        </b-tab>
+        <b-tab title="Posting options">
+          <PostingOptions></PostingOptions>
+        </b-tab>
+      </b-tabs>
     </div>
   </div>
+  <hr>
+  <h2 v-if="busy">Please wait...</h2>
+
+  <div>
+    <h2>About LeForum</h2>
+    <b>version 1.0.0</b>
+    <br>
+    <code>
+        Copyright (c) 2018 Nikita Kogut (MrOnlineCoder)
+      </code>
+    <br>
+    <code>
+      All Rights Reserved.
+      </code>
+    <br>
+    <code>
+        Licnesed under Apache License 2.0.
+      </code>
+    <br> Authors:
+    <ul>
+      <li> <a href="https://github.com/MrOnlineCoder">MrOnlineCoder</a> - creator, main developer</li>
+    </ul>
+    Used NPM packages (explicitly):
+    <ul>
+      <li>express</li>
+      <li>bootstrap-vue</li>
+      <li>camelcase</li>
+      <li>country-list</li>
+      <li>js-cookie</li>
+      <li>jsonwebtoken</li>
+      <li>marked</li>
+      <li>moment</li>
+      <li>morgan</li>
+      <li>sha.js</li>
+      <li>uuid</li>
+      <li>vue</li>
+      <li>vue-password</li>
+      <li>vue-quill-editor</li>
+      <li>vue-resource</li>
+      <li>vue-router</li>
+      <li>winston</li>
+    </ul>
+    I thank each author of these packages for their work.
+    <br>
+    <br>
+  </div>
+</div>
 </template>
 
 <script>
@@ -110,6 +101,7 @@ import InfoService from '../services/info'
 import PermissionsManager from '../components/PermissionsManager.vue'
 import RuleEditor from '../components/RuleEditor.vue'
 import CategoryEditor from '../components/CategoryEditor.vue'
+import PostingOptions from '../components/PostingOptions.vue'
 
 export default {
   data() {
@@ -141,7 +133,7 @@ export default {
       return;
     }
 
-    this.$http.get('/api/private/admin/canAccess?token='+Session.getToken()).then(resp => {
+    this.$http.get('/api/private/admin/canAccess?token=' + Session.getToken()).then(resp => {
       if (!resp.body.success) {
         this.$router.push('/home');
         return;
@@ -153,14 +145,15 @@ export default {
   },
   mounted() {
     this.$on('groupsUpdate', (val) => {
-      console.log('got update: '+val);
+      console.log('got update: ' + val);
       this.groups = val;
     });
   },
   components: {
     PermissionsManager,
     RuleEditor,
-    CategoryEditor
+    CategoryEditor,
+    PostingOptions
   }
 }
 </script>

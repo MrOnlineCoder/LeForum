@@ -2,6 +2,7 @@
   <div>
     <quill-editor v-model="content"
                 ref="editor"
+                :options="options"
                 @change="update()"
                 @ready="load()">
     </quill-editor>
@@ -18,7 +19,7 @@ export default {
       content: ''
     }
   },
-  props: ['initialData'],
+  props: ['initialData', 'options'],
   methods: {
     update(obj) {
       this.$emit('editorUpdate', this.content);
