@@ -23,6 +23,8 @@ const UserSchema = new mongoose.Schema({
  password: String,
  birth: Date,
  country: String,
+ bio: String,
+ signature: String,
  registered: Date,
  lastSeen: Date,
  posts: Number,

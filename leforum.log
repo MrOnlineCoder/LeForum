@@ -890,3 +890,13 @@
 29.03.2018 09:33:31 - info - [Main] Connected to MongoDB
 29.03.2018 09:33:31 - info - [Main] Created Express application
 29.03.2018 09:33:31 - info - [Main] Started Express server on port 3000
+29.03.2018 10:20:05 - info - === LeForum Session Start ===
+29.03.2018 10:20:05 - info - [Permissions] Loaded 4 user groups.
+29.03.2018 10:20:06 - info - [Main] Connected to MongoDB
+29.03.2018 10:20:06 - info - [Main] Created Express application
+29.03.2018 10:20:06 - info - [Main] Started Express server on port 3000
+29.03.2018 10:20:48 - info - === LeForum Session Start ===
+29.03.2018 10:20:48 - info - [Permissions] Loaded 4 user groups.
+29.03.2018 10:20:49 - info - [Main] Connected to MongoDB
+29.03.2018 10:20:49 - info - [Main] Created Express application
+29.03.2018 10:20:49 - info - [Main] Started Express server on port 3000

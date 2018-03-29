@@ -95,6 +95,8 @@ router.post('/register', (req,res) => {
   data.reputation = 0;
   data.group = 'user';
   data.lastSeen = new Date();
+  data.bio = '';
+  data.signature = '';
 
   data.password = Utils.toSHA256(data.password);
 
