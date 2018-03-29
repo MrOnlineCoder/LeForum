@@ -77,7 +77,7 @@
         "bugs": {
             "title": "Bug Reports",
             "description": "Report a bug here!",
-            "readLevel": "1",
+            "readLevel": "0",
             "writeLevel": 0
         }
     },

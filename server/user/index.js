@@ -77,7 +77,7 @@ function addPostCount(user, cb) {
       posts: 1
     }
   }, (err) => {
-    cb(!!err);
+    if (cb) cb(!!err);
   });
 }
 
@@ -87,7 +87,7 @@ function addReputation(user, cb) {
       reputation: 1
     }
   }, (err) => {
-    cb(!!err);
+    if (cb) cb(!!err);
   });
 }
 

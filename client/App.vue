@@ -6,6 +6,10 @@
     </div>
     <br>
     <router-view></router-view>
+    <div class="text-center">
+      <hr>
+      <p>Powered by <a href="https://github.com/MrOnlineCoder/LeForum">LeForum</a> </p>
+    </div>
   </div>
 </template>
 

@@ -5,20 +5,28 @@
     </b-alert>
     <div v-if="!busy && !err">
       <h2><b-badge>{{ category }}</b-badge> {{ topic.title }}</h2>
+      <p>Topic is <span :class="getStatusColor">{{ getStatusText }}</span></p>
       <small>Topic has been started {{ topic.date | formatDateTime }} by <b>{{ topic.author }}</b></small>
-      <hr>
       <div v-for="item in posts">
-        <Post :post="item" :user="userCache[item.author]"></Post>
         <hr>
+        <Post :post="item" :user="userCache[item.author]" @topicUpdated="fetchData()"></Post>
       </div>
     </div>
+    <br>
+    <p>Topic is <span :class="getStatusColor">{{ getStatusText }}</span></p>
+    <Reply :topic="topic" v-if="topic.open" @replyPosted="fetchData()"></Reply>
+    <TopicActions :topic="topic"></TopicActions>
+    <br>
+
     <h2 v-if="busy">Loading...</h2>
   </div>
 </template>
 
 <script>
 import Post from '../components/Post.vue'
+import Reply from '../components/Reply.vue'
 import InfoService from '../services/info'
+import TopicActions from '../components/TopicActions.vue'
 
 export default {
   data() {
@@ -70,6 +78,7 @@ export default {
       });
     },
     fetchData() {
+      this.busy = true;
       this.$http.get('/api/posts/forTopic/'+this.tid).then(resp => {
         if (!resp.body.success) {
           return this.error(resp.body.message);
@@ -82,12 +91,22 @@ export default {
       });
     }
   },
+  computed: {
+    getStatusText() {
+      return this.topic.open ? 'open' : 'closed';
+    },
+    getStatusColor() {
+      return this.topic.open ? 'text-primary' : 'text-danger';
+    }
+  },
   created() {
     this.tid = this.$route.params.id;
     this.fetchData();
   },
   components: {
-    Post
+    Post,
+    Reply,
+    TopicActions
   }
 }
 </script>

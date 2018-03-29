@@ -27,11 +27,39 @@ function addPost(user, topicID, content, cb) {
   });
 }
 
+function removeTopicPosts(topic, cb) {
+  Post.remove({
+    topic: topic
+  }, (err, docs) => {
+    if (err) {
+      winston.error('[PostService] Failed to remove posts for topic '+topic+': '+JSON.stringify(err));
+      cb(false);
+      return;
+    }
+
+    cb(true);
+  });
+}
+
+function remove(id, cb) {
+  Post.remove({
+    _id: id
+  }, (err, docs) => {
+    if (err) {
+      winston.error('[PostService] Failed to remove post '+id+': '+JSON.stringify(err));
+      cb(false);
+      return;
+    }
+
+    cb(true);
+  });
+}
+
 function getPostsForTopic(topic, cb) {
   Post.find({
     topic: topic
   }).sort({
-    date: -1
+    date: 1
   }).exec((err, docs) => {
     if (err) {
       winston.error('[PostService] Failed to find posts for topic '+topic+': '+JSON.stringify(err));
@@ -45,5 +73,7 @@ function getPostsForTopic(topic, cb) {
 
 module.exports = {
   addPost,
-  getPostsForTopic
+  getPostsForTopic,
+  removeTopicPosts,
+  remove
 };

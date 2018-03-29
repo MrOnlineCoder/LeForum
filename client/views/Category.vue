@@ -16,7 +16,7 @@
       Error: {{ errMsg }}
     </b-alert>
 
-    <div v-if="!busy">
+    <div v-if="!busy && !err">
       <b-alert variant="info" :show="topics.length == 0">
         No topics are present is this category. Be the first to create one!
       </b-alert>

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <b-card :title="user.username"
+    <b-card :title="getLink"
              :img-src="user.avatarURL ? user.avatarURL : undefined"
              img-alt="User Avatar"
              img-top
              style="height: 100%">
        <p class="card-text">
-         <a :href="'#/profile/'+user.username"><span :style="{color: InfoService.getGroupColor(user.group), 'text-decoration': 'underline'}">{{ user.group | formatGroupTitle }}</span></a>
+         <span :style="{color: InfoService.getGroupColor(user.group), 'text-decoration': 'underline'}">{{ user.group | formatGroupTitle }}</span></a>
          <br>
          Posts: <b>{{ user.posts }}</b>
          <br>
@@ -29,6 +29,11 @@ export default {
   data() {
     return {
       InfoService
+    }
+  },
+  computed: {
+    getLink() {
+      return '<a href=\"#/profile/'+this.user.username+'\"> '+this.user.username+'</a>';
     }
   }
 }

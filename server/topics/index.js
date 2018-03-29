@@ -53,8 +53,36 @@ function getById(id, cb) {
   });
 }
 
+function remove(id, cb) {
+  Topic.remove({_id: id}, (err, doc) => {
+    if (err || !doc) {
+      winston.error('[TopicService] Failed to remove topic by ID:'+id+': '+JSON.stringify(err));
+      cb(false);
+      return;
+    }
+
+    cb(true);
+  });
+}
+
+
+function toggleLock(id, mode, cb) {
+  Topic.update({_id: id}, {$set: {open: mode}}, (err, doc) => {
+    if (err || !doc) {
+      winston.error('[TopicService] Failed to update topic mode by ID:'+id+': '+JSON.stringify(err));
+      cb(false);
+      return;
+    }
+
+    cb(true);
+  });
+}
+
+
 module.exports = {
   fetchCategoryTopics,
   createTopic,
-  getById
+  getById,
+  remove,
+  toggleLock
 };

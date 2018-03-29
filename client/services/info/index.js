@@ -45,6 +45,11 @@ function getGroupTitle(name) {
   return groups[name].title;
 }
 
+//FIX ME: fix this code duplication (create shared code ?)
+function hasPermission(user, perm) {
+  return groups[user.group].permission.includes(perm) || groups[user.group].permission.includes('*');
+}
+
 export default {
   get,
   init,
@@ -52,5 +57,6 @@ export default {
   groups,
   getGroupColor,
   getGroups,
-  getGroupTitle
+  getGroupTitle,
+  hasPermission
 };

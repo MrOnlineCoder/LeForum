@@ -45,4 +45,48 @@ router.get('/forTopic/:id', (req,res) => {
   });
 });
 
+router.post('/add', AuthAPI.privateAPI, (req,res) => {
+  TopicService.getById(req.body.topic, (ok, topicDoc) => {
+    if (!ok) {
+      res.json({
+        success: false,
+        message: 'Failed to find topic with that ID!'
+      });
+      return;
+    }
+
+    if (!Permissions.canPostToCategory(req.user, topicDoc.category)) {
+      res.json({
+        success: false,
+        message: 'Access denied, you do not have enough permissions to post to that topic!'
+      });
+      return;
+    }
+
+    if (!topicDoc.open) {
+      res.json({
+        success: false,
+        message: 'Topic is locked.'
+      });
+      return;
+    }
+
+    PostService.addPost(req.user.username, req.body.topic, req.body.content, (ok, postsDocs) => {
+      if (!ok) {
+        res.json({
+          success: false,
+          message: 'Failed to create new post!'
+        });
+        return;
+      }
+
+      UserService.addPostCount(req.user.username);
+
+      res.json({
+        success: true
+      });
+    });
+  });
+});
+
 module.exports = router;

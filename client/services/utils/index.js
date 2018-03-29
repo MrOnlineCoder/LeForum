@@ -18,7 +18,7 @@ function formatDateTime(raw) {
     return 'today at '+a.format('HH:mm');
   }
 
-  return moment(raw).format('DD.MM.YYYY');
+  return moment(raw).format('DD.MM.YYYY HH:mm');
 }
 
 

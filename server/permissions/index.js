@@ -10,8 +10,6 @@ let groups = [];
 let categories = [];
 
 const Actions = {
-  READ_POSTS: 'read',
-  POST: 'post',
   RATE_OTHERS: 'rate',
   SET_AVATAR: 'avatar',
   SET_SIGNATURE: 'signature',
@@ -25,8 +23,6 @@ const Actions = {
 };
 
 const ActionHints = {
-  READ_POSTS: 'Read posts in any topic',
-  POST: 'Post messages in topics',
   RATE_OTHERS: 'Rate others\' posts',
   SET_AVATAR: 'Have custom avatar',
   SET_SIGNATURE: 'Set custom signature',
