@@ -1,3 +1,4 @@
 theme: jekyll-theme-slate
-title: LeForum Project
-description: LeForum engine homepage
+title: LeForum
+description: Simple Node.js SPA forum engine
+show_downloads: true
