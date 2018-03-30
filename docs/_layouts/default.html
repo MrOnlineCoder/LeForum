@@ -8,7 +8,11 @@
     <meta name="description" content="{{ site.title | default: site.github.repository_name }} : {{ site.description | default: site.github.project_tagline }}">
 
     <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-
+    <style>
+      #downloads {
+        background: initial;
+      }
+    </style>
 {% seo %}
   </head>
 
@@ -24,7 +28,7 @@
 
           {% if site.show_downloads %}
             <section id="downloads">
-              <a class="tar_download_link" href="{{ site.github.zip_url }}">Download latest release</a>
+              <a class="zip_download_link" href="{{ site.github.zip_url }}">Download latest release</a>
               <!--<a class="tar_download_link" href="{{ site.github.tar_url }}">Download this project as a tar.gz file</a>-->
             </section>
           {% endif %}
