@@ -45,4 +45,4 @@ export PORT=80
 # start leforum server using nodejs cli tool (or via nodemon, pm2 or any other management tool)
 node server.js
 ```
-6. Browse to [localhost:3000/#/install](http://localhost:3000/#/install) to finish installation process in browser (replace 3000 with your port)
+* Browse to [localhost:3000/#/install](http://localhost:3000/#/install) to finish installation process in browser (replace 3000 with your port)
