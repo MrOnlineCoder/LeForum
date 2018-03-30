@@ -11,6 +11,7 @@ const moment = require('moment');
 const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require("body-parser");
+const fs = require('fs');
 
 const Config = require('./config');
 const DB = require('./db');
@@ -27,6 +28,8 @@ const PrivateAPI = require('./private');
 const UserAPI = require('./user/api.js');
 
 let app = null;
+
+const logDir = './logs';
 
 function logFormatter(args) {
     var date = moment().format("DD.MM.YYYY hh:mm:ss");
@@ -66,7 +69,20 @@ function loadServer() {
 }
 
 function run() {
-  winston.add(winston.transports.File, { filename: 'leforum.log', formatter: logFormatter, json: false });
+  if (!fs.existsSync(logDir)){
+      fs.mkdirSync(logDir);
+  }
+
+  let datenow = moment().format('DD-MM-YYYY');
+
+  let logfile = logDir+'/leforum-'+datenow+'.log';
+
+  winston.add(winston.transports.File, {
+    filename: logfile,
+    formatter: logFormatter,
+    json: false
+  });
+  
   winston.info('=== LeForum Session Start ===');
 
   if (Config.isConfigPresent()) {
