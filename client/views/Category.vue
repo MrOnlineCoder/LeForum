@@ -6,7 +6,10 @@
       </div>
       <div class="col-md-2 col-xs-2 col-sm-2">
         <b-btn-group class="float-right">
-          <b-button variant="info" v-if="loggedIn" @click="newTopic">+ New Topic</b-button>
+          <b-button variant="info" v-if="loggedIn" @click="newTopic">
+            <font-awesome-icon icon="pencil-alt" />
+            New Topic
+           </b-button>
         </b-btn-group>
       </div>
     </div>

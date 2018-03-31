@@ -1,5 +1,11 @@
 <template>
   <div>
+    <br>
+    <div class="text-center">
+      <b-button variant="success" @click="newGroup()">Add new usergroup</b-button>
+    </div>
+    <br>
+
       <!--If BootstrapVue has enough functionality to implement this table, updating this raw table is welcomed-->
       <table class="table">
         <thead>
@@ -48,7 +54,10 @@
           </label>
         </div>
       </b-modal>
-      <b-button variant="success" size="lg" @click="save()">Save permissions</b-button>
+      <b-button variant="success" size="lg" @click="save()">
+        <font-awesome-icon icon="save" />
+        Save permissions
+      </b-button>
       <br>
       <br>
       <b-alert variant="success" :show="ok">
@@ -76,6 +85,20 @@ export default {
     openPermsModal(id) {
       this.editGroup = id;
       this.$refs.permModal.show();
+    },
+    newGroup() {
+      let str = prompt('Enter group ID (please, use only lower case letters, numbers, underscores and dashes):');
+      if (!str) return;
+
+      this.groups[Utils.toCamelCase(str)] = {
+        title: 'NewGroup Title',
+        color: '#000000',
+        staff: false,
+        permission: [],
+        readLevel: 0,
+        writeLevel: 0
+      };
+      this.$forceUpdate();
     },
     removeGroup(id) {
       delete this.groups[id];

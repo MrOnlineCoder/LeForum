@@ -31,9 +31,18 @@
           <template slot="button-content">
             <b>{{ username }}</b>
           </template>
-          <b-dropdown-item href="#">Settings</b-dropdown-item>
-          <b-dropdown-item href="https://github.com/MrOnlineCoder/LeForum/issues">Report a bug</b-dropdown-item>
-          <b-dropdown-item href="#" @click='logout()'>Logout</b-dropdown-item>
+          <b-dropdown-item href="#">
+            <font-awesome-icon icon="cog" />
+            Settings
+          </b-dropdown-item>
+          <b-dropdown-item href="https://github.com/MrOnlineCoder/LeForum/issues">
+            <font-awesome-icon icon="bug" />
+            Report a bug
+          </b-dropdown-item>
+          <b-dropdown-item href="#" @click='logout()'>
+            <font-awesome-icon icon="sign-out-alt" />
+            Logout
+          </b-dropdown-item>
         </b-nav-item-dropdown>
 
         &nbsp;

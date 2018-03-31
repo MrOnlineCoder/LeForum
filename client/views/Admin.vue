@@ -23,7 +23,10 @@
             <img :src="general.brandURL" width="100" height="100">
           </p>
 
-          <b-button variant="success" size="lg" @click="saveConfig()">Save configuration</b-button>
+          <b-button variant="success" size="lg" @click="saveConfig()">
+            <font-awesome-icon icon="save" />
+            Save configuration
+          </b-button>
           <br>
           <br>
           <b-alert variant="success" :show="ok">

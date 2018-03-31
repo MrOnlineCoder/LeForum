@@ -2,11 +2,14 @@
 LeForum is simple forum engine, powered by Node.js and Vue.
 LeForum can be used as a discussion board for your project, community or website.
 
+**Current project status:** in development, please wait for public release! 
+
 # Features
 
 * Frontend is powered by [Vue.js](https://vuejs.org/) - fast and lightweight Javascript framework.
 * Meanwhile, backend is powered by popular Node.js web-server - [Express](http://expressjs.com/), combined with [mongoose](https://www.npmjs.com/package/mongoose) - object modeling tool for NoSQL database - the [MongoDB](https://www.mongodb.com/).
 * Forum has simple and minimalistic UI, heavily powered by [Bootstrap 4](https://getbootstrap.com/).
+* Includes really **awesome** and simple icons by [FontAwesome](https://fontawesome.com/)
 * Powerful user groups and permissions system
 * Built-in WYSIWYG posts editor - [Quill](https://quilljs.com/)
 * and a lot of small other features!

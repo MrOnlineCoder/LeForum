@@ -40,7 +40,10 @@
       </b-form-group>
       <b-alert variant="danger" :show="err">Error: {{ errMsg }}</b-alert>
 
-      <b-button type="submit" variant="success" @click="register()">Register</b-button>
+      <b-button type="submit" variant="success" @click="register()">
+        <font-awesome-icon icon="user-plus" />
+        Register
+      </b-button>
     </b-form>
     <b-alert variant="success" :show="registered">
       Congratulations! You have been successfully registered!

@@ -3,7 +3,10 @@
     <b-card header="Reply" v-if="ok">
       <Editor @editorUpdate='editorUpdate'></Editor>
       <br>
-      <b-button variant="success" @click="post()">Post</b-button>
+      <b-button variant="success" @click="post()">
+        <font-awesome-icon icon="envelope" />
+        Post
+      </b-button>
     </b-card>
     <b-alert variant="danger" :show="!ok">
       Error: {{ msg }}

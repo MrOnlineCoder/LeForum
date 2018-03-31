@@ -63,6 +63,19 @@
             ],
             "readLevel": "1",
             "writeLevel": "1"
+        },
+        "helper": {
+            "title": "Helper",
+            "color": "#3F51B5",
+            "staff": false,
+            "permission": [
+                "rate",
+                "avatar",
+                "signature",
+                "close_threads"
+            ],
+            "readLevel": 0,
+            "writeLevel": 0
         }
     },
     "brandURL": "http://placehold.it/60",

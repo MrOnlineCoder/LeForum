@@ -2,9 +2,18 @@
   <div v-if="ok">
     <hr>
     <b-button-group>
-        <b-button variant="warning" v-if="topic.open && canLock" @click="toggleLock(false)">Close Topic</b-button>
-        <b-button variant="info" v-if="!topic.open  && canLock" @click="toggleLock(true)">Open Topic</b-button>
-        <b-button variant="danger" v-if="canDelete" @click="askRemove()">Delete Topic</b-button>
+        <b-button variant="warning" v-if="topic.open && canLock" @click="toggleLock(false)">
+          <font-awesome-icon icon="lock" />
+          Close Topic
+        </b-button>
+        <b-button variant="info" v-if="!topic.open  && canLock" @click="toggleLock(true)">
+          <font-awesome-icon icon="lock-open" />
+          Open Topic
+        </b-button>
+        <b-button variant="danger" v-if="canDelete" @click="askRemove()">
+          <font-awesome-icon icon="trash" />
+          Delete Topic
+        </b-button>
       </b-button-group>
 
     <b-modal ref="removeModal" title="Confirm" header-bg-variant="danger" @ok="removeTopic()">

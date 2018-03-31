@@ -21,7 +21,10 @@
       <br>
       <b-alert variant="danger" :show="err">Error: {{ errMsg }}</b-alert>
       <br>
-      <b-button type="submit" variant="success" @click="login()" :disabled="busy">{{ busy ? 'Please wait..' : 'Login'}}</b-button>
+      <b-button type="submit" variant="success" @click="login()" :disabled="busy">
+        <font-awesome-icon icon="sign-in-alt" />
+        {{ busy ? 'Please wait..' : 'Login'}}
+      </b-button>
     </b-form-group>
     </b-form>
     <br>

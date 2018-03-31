@@ -11,7 +11,10 @@
            <div v-if="canDeletePost">
              <hr>
              <b-button-group>
-               <b-button variant="danger" size="sm" @click="askPostRemove()">Delete</b-button>
+               <b-button variant="danger" size="sm" @click="askPostRemove()">
+                 <font-awesome-icon icon="times" />
+                 Delete
+               </b-button>
              </b-button-group>
            </div>
          </b-card>

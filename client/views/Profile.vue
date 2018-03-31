@@ -6,7 +6,10 @@
       </div>
       <div class="col-md-2 col-xs-2 col-sm-2">
         <b-btn-group class="float-right">
-          <b-button variant="info" v-if="loggedIn && self" @click="editProfile()">Edit Profile</b-button>
+          <b-button variant="info" v-if="loggedIn && self" @click="editProfile()">
+            <font-awesome-icon icon="edit" />
+            Edit Profile
+          </b-button>
         </b-btn-group>
       </div>
     </div>
@@ -18,6 +21,28 @@
     <div class="row">
       <div class="col-md-3 col-sm-3 col-xs-3">
         <UserCard :user="user"></UserCard>
+      </div>
+      <div class="col-md-9 col-xs-9 col-sm-9">
+        <b-tabs v-if="!busy">
+          <b-tab title="About">
+            <br>
+            <ul>
+              <li><font-awesome-icon icon="compass" /> Location: {{ user.country }}</li>
+              <li v-if="user.bio"><font-awesome-icon icon="user" /> Bio: {{ user.bio }}</li>
+              <li v-if="user.signature"><font-awesome-icon icon="check" /> Signature: {{ user.signature }}</li>
+            </ul>
+            <br>
+            <p v-if="!self">Permalink to this page: <a :href="fullhref">{{ fullhref }}</a> </p>
+          </b-tab>
+
+          <b-tab title="Topics" v-if="topics.length > 0">
+            <br>
+            <div v-for="item in topics">
+              <TopicLine :data="item"></TopicLine>
+              <br>
+            </div>
+          </b-tab>
+        </b-tabs>
       </div>
     </div>
 
@@ -44,6 +69,7 @@
 <script>
 import UserCard from '../components/UserCard.vue'
 import Session from '../services/session'
+import TopicLine from '../components/TopicLine.vue'
 
 import countryList from 'country-list'
 
@@ -51,7 +77,9 @@ export default {
   data() {
     return {
       user: {},
+      fullhref: '',
       editUser: {},
+      topics: [],
       busy: true,
       err: false,
       errorMsg: '',
@@ -61,18 +89,44 @@ export default {
     }
   },
   components: {
-    UserCard
+    UserCard,
+    TopicLine
   },
   methods: {
     save() {
+      this.$http.post('/api/private/user/edit', {
+        token: Session.getToken(),
+        data: this.editUser
+      }).then(resp => {
+        if (!resp.body.success) {
+          this.err = true;
+          this.errorMsg = resp.body.message;
+          return;
+        }
 
+        this.user = Object.assign({}, this.editUser);
+      });
     },
     editProfile() {
       this.editUser = Object.assign({}, this.user);
       this.$refs.editModal.show();
+    },
+    fetchUserTopics() {
+      this.$http.get('/api/topics/forUser/'+this.user.username).then(resp => {
+        if (!resp.body.success) {
+          this.err = true;
+          this.errorMsg = resp.body.message;
+          this.busy = false;
+          return;
+        }
+
+        this.busy = false;
+        this.topics = resp.body.topics;
+      });
     }
   },
   created() {
+    this.fullhref = window.location.href;
     if (this.$route.params.id) {
       this.$http.get('/api/users/profile/'+this.$route.params.id).then(resp => {
         if (!resp.body.success) {
@@ -84,6 +138,7 @@ export default {
 
         this.busy = false;
         this.user = resp.body.user;
+        this.fetchUserTopics();
       });
     } else {
       this.self = true;
@@ -91,6 +146,7 @@ export default {
         this.$router.push('/login');
       }
       this.user = Session.getUser();
+      this.fetchUserTopics();
       this.busy = false;
     }
   }

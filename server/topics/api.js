@@ -106,11 +106,29 @@ router.post('/new', AuthAPI.privateAPI, (req,res) => {
           });
           return;
         }
+        UserService.addPostCount(req.user.username);
 
         res.json({
           success: true,
           topicID: id
         });
+    });
+  });
+});
+
+router.get('/forUser/:user', (req,res) => {
+  TopicService.getTopicsForUser(req.params.user, (ok, docs) => {
+    if (!ok) {
+      res.json({
+        success: false,
+        message: 'Failed to fetch topics for user!'
+      });
+      return;
+    }
+
+    res.json({
+      success: true,
+      topics: docs
     });
   });
 });

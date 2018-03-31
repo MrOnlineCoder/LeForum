@@ -2,7 +2,10 @@
   <div>
     <Editor @editorUpdate='editorUpdate' :initialData='oldRules'></Editor>
     <br>
-    <b-button variant="success" size="lg" @click="save()">Save rules</b-button>
+    <b-button variant="success" size="lg" @click="save()">
+      <font-awesome-icon icon="save" />
+      Save rules
+    </b-button>
     <br>
     <br>
     <b-alert variant="success" :show="ok">

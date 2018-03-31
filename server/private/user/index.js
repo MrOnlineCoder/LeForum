@@ -28,6 +28,23 @@ router.get('/get', AuthAPI.privateAPI, (req,res) => {
   });
 });
 
+
+router.post('/edit', AuthAPI.privateAPI, (req,res) => {
+  UserService.updateProfile(req.user.username, req.body.data, (ok) => {
+    if (!ok) {
+      res.json({
+        success: false,
+        message: 'Failed to update profile.'
+      });
+      return;
+    }
+
+    res.json({
+      success: true
+    });
+  })
+});
+
 router.get('/whoami', AuthAPI.privateAPI, (req,res) => {
   res.json({
     success: true,

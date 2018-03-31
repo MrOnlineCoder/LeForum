@@ -6,6 +6,7 @@
  */
 
 import moment from 'moment'
+import camelcase from 'camelcase'
 
 function formatDate(raw) {
   return moment(raw).format('DD.MM.YYYY');
@@ -21,8 +22,12 @@ function formatDateTime(raw) {
   return moment(raw).format('DD.MM.YYYY HH:mm');
 }
 
+function toCamelCase(data) {
+  return camelcase(data);
+}
 
 export default {
   formatDate,
-  formatDateTime
+  formatDateTime,
+  toCamelCase
 }

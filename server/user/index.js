@@ -151,6 +151,36 @@ function getLoginUser(email, password, cb) {
   });
 }
 
+function updateProfile(username, data, cb) {
+  let obj = Object.assign({}, data);
+
+  // Remove properties which can wrongly mutate user data.
+  // Allow only birth, country, bio, signature to be changed
+  delete obj.username;
+  delete obj._id;
+  delete obj.registered;
+  delete obj.posts;
+  delete obj.reputation;
+  delete obj.password;
+  delete obj.email;
+  delete obj.lastSeen;
+  delete obj.group;
+
+  User.update({
+    username: username
+  }, {
+    $set: obj
+  }, (err, doc) => {
+    if (err) {
+      winston.error('[UserService] Failed to update new userdata  '+JSON.stringify(obj)+', err='+err);
+      cb(false);
+      return;
+    }
+
+    cb(true);
+  });
+}
+
 module.exports = {
   register,
   exists,
@@ -160,5 +190,6 @@ module.exports = {
   getByName,
   addPostCount,
   addReputation,
-  usersFromList
+  usersFromList,
+  updateProfile
 };

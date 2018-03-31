@@ -25,10 +25,16 @@ import Session from './services/session'
 
 import Utils from './services/utils'
 
-
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+
+import fontawesome from '@fortawesome/fontawesome'
+import solid from '@fortawesome/fontawesome-free-solid'
+
+fontawesome.library.add(solid)
+
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 
 Vue.use(VueRouter);
@@ -36,6 +42,7 @@ Vue.use(VueResource);
 Vue.use(BootstrapVue);
 
 Vue.use(VueQuillEditor);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 const routes = [
   { path: '/home', component: HomeView },

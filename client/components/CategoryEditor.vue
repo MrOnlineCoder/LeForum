@@ -9,7 +9,9 @@
           <th scope="col" v-b-tooltip.hover title="Read level determines which user groups will be able to read that category. Set to 0 to make it visible for everyone (including guests)">Read Level</th>
           <th scope="col" v-b-tooltip.hover title="Write level determines which user groups will be able to post to that category">Write Level</th>
           <th scope="col">Remove</th>
-          <th><b-button variant="success" @click="add()">Add</b-button></th>
+          <th><b-button variant="success" @click="add()">
+            <font-awesome-icon icon="plus" />
+          </b-button></th>
         </tr>
       </thead>
       <tbody>
@@ -19,13 +21,18 @@
           <td><input type="text" class="form-control" v-model="categories[k].description"></td>
           <td><input type="number" class="form-control" v-model="categories[k].readLevel"></td>
           <td><input type="number" class="form-control" v-model="categories[k].writeLevel"></td>
-          <td><b-button variant="danger" @click="remove(k)">Remove</b-button></td>
+          <td><b-button variant="danger" @click="remove(k)">
+            <font-awesome-icon icon="times" />
+          </b-button></td>
         </tr>
       </tbody>
     </table>
     <h3 v-if="Object.keys(categories).length == 0">Nothing to show. Click `Add` to add a new category</h3>
     <br>
-    <b-button variant="success" size="lg" @click="save()">Save categories</b-button>
+    <b-button variant="success" size="lg" @click="save()">
+      <font-awesome-icon icon="save" />
+      Save categories
+    </b-button>
     <br>
     <br>
     <b-alert variant="success" :show="ok">

@@ -78,11 +78,28 @@ function toggleLock(id, mode, cb) {
   });
 }
 
+function getTopicsForUser(user, cb) {
+  Topic.find({
+    author: user
+  }).sort({
+    date: -1
+  }).exec((err, docs) => {
+    if (err) {
+      winston.error('[TopicService] Failed to fetch topics for user '+user+': '+JSON.stringify(err));
+      cb(false, null);
+      return;
+    }
+
+    cb(true, docs);
+  });
+}
+
 
 module.exports = {
   fetchCategoryTopics,
   createTopic,
   getById,
   remove,
-  toggleLock
+  toggleLock,
+  getTopicsForUser
 };
