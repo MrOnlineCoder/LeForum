@@ -29,8 +29,12 @@
         <b-nav-item-dropdown right v-if="isLoggedIn">
           <!-- Using button-content slot -->
           <template slot="button-content">
-            <b>{{ username }}</b>
+            <b>{{ username }} <b-badge v-if="notifications > 0" variant="warning">{{ notifications }}</b-badge></b>
           </template>
+          <b-dropdown-item href="#/notifications">
+            <font-awesome-icon icon="bell" />
+            Notifications <b-badge>{{ notifications }}</b-badge>
+          </b-dropdown-item>
           <b-dropdown-item href="#">
             <font-awesome-icon icon="cog" />
             Settings
@@ -72,6 +76,7 @@ export default {
       name: "",
       brandURL: "",
       username: "",
+      notifications: 0,
       isLoggedIn: false
     }
   },
@@ -84,6 +89,15 @@ export default {
     },
     sessionCallback() {
       this.isLoggedIn = Session.isLoggedIn();
+    },
+    fetchNotifications() {
+      this.$http.get('/api/private/user/notifications?token='+Session.getToken()).then(resp => {
+        if (!resp.body.success) {
+          return;
+        }
+
+        this.notifications = resp.body.docs.length;
+      });
     }
   },
   created() {
@@ -94,6 +108,7 @@ export default {
     if (Session.isLoggedIn()) {
       this.username = Session.getUser().username;
       this.isLoggedIn = true;
+      this.fetchNotifications();
     }
   }
 }

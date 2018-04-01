@@ -3,6 +3,7 @@
     <b-card header="Reply" v-if="ok">
       <Editor @editorUpdate='editorUpdate'></Editor>
       <br>
+      <h5 v-if="reply">Reply: <small>{{ reply }}</small></h5>
       <b-button variant="success" @click="post()">
         <font-awesome-icon icon="envelope" />
         Post
@@ -26,12 +27,13 @@ export default {
       msg: 'Loading...'
     }
   },
-  props: ['topic'],
+  props: ['topic', 'reply'],
   methods: {
     post() {
       this.$http.post('/api/posts/add', {
         topic: this.topic._id,
         content: this.content,
+        reply: this.reply,
         token: Session.getToken()
       }).then(resp => {
         if (!resp.body.success) {

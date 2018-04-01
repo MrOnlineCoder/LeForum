@@ -2,7 +2,7 @@
 LeForum is simple forum engine, powered by Node.js and Vue.
 LeForum can be used as a discussion board for your project, community or website.
 
-**Current project status:** in development, please wait for public release! 
+**Current project status:** in development, please wait for public release!
 
 # Features
 

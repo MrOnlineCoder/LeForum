@@ -8,6 +8,7 @@
 const express = require('express');
 const AuthAPI = require('../../auth');
 const UserService = require('../../user');
+const Notifications = require('../../notifications');
 
 let router = express.Router();
 
@@ -28,6 +29,38 @@ router.get('/get', AuthAPI.privateAPI, (req,res) => {
   });
 });
 
+router.get('/notifications', AuthAPI.privateAPI, (req,res) => {
+  Notifications.get(req.user.username, (ok, docs) => {
+    if (!ok) {
+      res.json({
+        success: false,
+        message: 'Couldn\' fetch all notifications'
+      });
+      return;
+    }
+
+    res.json({
+      success: true,
+      docs: docs
+    });
+  });
+});
+
+router.post('/notifications/clear', AuthAPI.privateAPI, (req,res) => {
+  Notifications.clear(req.user.username, (ok) => {
+    if (!ok) {
+      res.json({
+        success: false,
+        message: 'Couldn\' clear all notifications'
+      });
+      return;
+    }
+
+    res.json({
+      success: true
+    });
+  });
+});
 
 router.post('/edit', AuthAPI.privateAPI, (req,res) => {
   UserService.updateProfile(req.user.username, req.body.data, (ok) => {

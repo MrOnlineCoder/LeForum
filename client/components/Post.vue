@@ -8,12 +8,16 @@
         <b-card :header="post.date | formatDateTime" border-variant="secondary">
            <p class="card-text" v-html="post.content"></p>
 
-           <div v-if="canDeletePost">
+           <div>
              <hr>
              <b-button-group>
-               <b-button variant="danger" size="sm" @click="askPostRemove()">
+               <b-button variant="danger" size="sm" @click="askPostRemove()" v-if="canDeletePost">
                  <font-awesome-icon icon="times" />
                  Delete
+               </b-button>
+               <b-button variant="info" size="sm" @click="reply()">
+                 <font-awesome-icon icon="reply" />
+                 Reply
                </b-button>
              </b-button-group>
            </div>
@@ -50,6 +54,9 @@ export default {
     }
   },
   methods: {
+    reply() {
+      this.$emit('replyTo', this.user.username);
+    },
     removePost() {
       this.$http.post('/api/private/posts/delete', {
         token: Session.getToken(),

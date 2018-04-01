@@ -26,11 +26,11 @@
         <b-tabs v-if="!busy">
           <b-tab title="About">
             <br>
-            <ul>
-              <li><font-awesome-icon icon="compass" /> Location: {{ user.country }}</li>
-              <li v-if="user.bio"><font-awesome-icon icon="user" /> Bio: {{ user.bio }}</li>
-              <li v-if="user.signature"><font-awesome-icon icon="check" /> Signature: {{ user.signature }}</li>
-            </ul>
+            <div>
+              <p><font-awesome-icon icon="compass" /> Location: {{ user.country }}</p>
+              <p v-if="user.bio"><font-awesome-icon icon="user" /> {{ user.bio }}</p>
+              <p v-if="user.signature"><font-awesome-icon icon="check" /> Signature: {{ user.signature }}</p>
+            </div>
             <br>
             <p v-if="!self">Permalink to this page: <a :href="fullhref">{{ fullhref }}</a> </p>
           </b-tab>

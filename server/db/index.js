@@ -49,13 +49,24 @@ const PostSchema = new mongoose.Schema({
  likes: [String]
 });
 
+const NotificationSchema = new mongoose.Schema({
+ type: String, //like, mention, delete
+ target: String,
+ date: Date,
+ data: String,
+ topic: TopicSchema
+});
+
+
 let User = mongoose.model("users", UserSchema);
 let Topic = mongoose.model("topics", TopicSchema);
 let Post = mongoose.model("posts", PostSchema);
+let Notification = mongoose.model("notifications", NotificationSchema);
 
 module.exports = {
   connect,
   User,
   Topic,
-  Post
+  Post,
+  Notification
 }

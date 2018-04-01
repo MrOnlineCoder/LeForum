@@ -19,6 +19,7 @@ import RulesView from './views/Rules.vue'
 import CategoryView from './views/Category.vue'
 import NewTopicView from './views/NewTopic.vue'
 import TopicView from './views/Topic.vue'
+import NotificationsView from './views/Notifications.vue'
 
 import InfoService from './services/info'
 import Session from './services/session'
@@ -57,6 +58,7 @@ const routes = [
   { path: '/category/:c', component: CategoryView },
   { path: '/category/:c/new', component: NewTopicView },
   { path: '/topic/:id', component: TopicView },
+  { path: '/notifications', component: NotificationsView },
   { path: '*', redirect: '/home' }
 ];
 

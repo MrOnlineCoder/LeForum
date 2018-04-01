@@ -15,6 +15,8 @@ const Permissions = require('../permissions');
 const PostService = require('./index.js');
 const TopicService = require('../topics');
 
+const NotificationService = require('../notifications');
+
 let router = express.Router();
 
 router.get('/forTopic/:id', (req,res) => {
@@ -78,6 +80,11 @@ router.post('/add', AuthAPI.privateAPI, (req,res) => {
           message: 'Failed to create new post!'
         });
         return;
+      }
+
+      if (req.body.reply) {
+        //Sent user a notification that he was mentioned
+        NotificationService.notify(req.body.reply, 'mention', req.user.username, topicDoc);
       }
 
       UserService.addPostCount(req.user.username);

@@ -14,7 +14,10 @@
       </div>
     </div>
     <hr>
-    <h3 v-if="busy">Loading ...</h3>
+    <h3 v-if="busy">
+      <font-awesome-icon icon="spinner" spin/>
+      Loading ...
+    </h3>
     <b-alert variant="danger" :show="err">
       Error: {{ errMsg }}
     </b-alert>

@@ -9,12 +9,17 @@
       <small>Topic has been started {{ topic.date | formatDateTime }} by <b>{{ topic.author }}</b></small>
       <div v-for="item in posts">
         <hr>
-        <Post :post="item" :user="userCache[item.author]" @topicUpdated="fetchData()"></Post>
+        <Post
+          :post="item"
+          :user="userCache[item.author]"
+          @topicUpdated="fetchData()"
+          @replyTo="setReply">
+        </Post>
       </div>
     </div>
     <br>
     <p>Topic is <span :class="getStatusColor">{{ getStatusText }}</span></p>
-    <Reply :topic="topic" v-if="topic.open" @replyPosted="fetchData()"></Reply>
+    <Reply :topic="topic" :reply="reply" v-if="topic.open" @replyPosted="fetchData()"></Reply>
     <TopicActions :topic="topic"></TopicActions>
     <br>
 
@@ -39,6 +44,7 @@ export default {
       err: false,
       errMsg: '',
       tid: '',
+      reply: '',
       busy: true
     }
   },
@@ -48,6 +54,10 @@ export default {
       this.errMsg = msg;
       this.busy = false;
       return false;
+    },
+    setReply(u) {
+      console.log(u);
+      this.reply = u;
     },
     createUsersCache() {
       //1.Iterate through all objects and determine what user profiles we need to load
