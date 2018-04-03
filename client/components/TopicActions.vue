@@ -14,6 +14,9 @@
           <font-awesome-icon icon="trash" />
           Delete Topic
         </b-button>
+        <b-button variant="info" class="shareButton" :data-clipboard-text='link' v-b-tooltip.click title="Topic share link has been copied to clipboard.">
+          <font-awesome-icon icon="share-alt" /> Share
+        </b-button>
       </b-button-group>
 
     <b-modal ref="removeModal" title="Confirm" header-bg-variant="danger" @ok="removeTopic()">
@@ -33,7 +36,8 @@ export default {
     return {
       ok: false,
       canLock: false,
-      canDelete: false
+      canDelete: false,
+      link: ''
     }
   },
   methods: {
@@ -76,6 +80,8 @@ export default {
       this.canDelete = InfoService.hasPermission(Session.getUser(), 'delete_threads');
       this.ok = true;
     }
+
+    this.link = window.location.href;
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="replyBox">
     <b-card header="Reply" v-if="ok">
       <Editor @editorUpdate='editorUpdate'></Editor>
       <br>

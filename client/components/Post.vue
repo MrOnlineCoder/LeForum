@@ -1,23 +1,27 @@
 <template>
-  <div>
+  <div :id="'post_'+post._id">
     <div class="row">
       <div class="col-md-3 col-sm-3 col-xs-3">
         <UserCard :user="user"></UserCard>
       </div>
       <div class="col-md-9 col-sm-9 col-xs-9">
         <b-card :header="post.date | formatDateTime" border-variant="secondary">
-           <p class="card-text" v-html="post.content"></p>
+          <p class="card-text" v-html="post.content"></p>
 
            <div>
              <hr>
              <b-button-group>
-               <b-button variant="danger" size="sm" @click="askPostRemove()" v-if="canDeletePost">
-                 <font-awesome-icon icon="times" />
-                 Delete
+               <b-button variant="primary" size="sm" @click="like()">
+                 <font-awesome-icon icon="thumbs-up" />
+                 Like
                </b-button>
                <b-button variant="info" size="sm" @click="reply()">
                  <font-awesome-icon icon="reply" />
                  Reply
+               </b-button>
+               <b-button variant="danger" size="sm" @click="askPostRemove()" v-if="canDeletePost">
+                 <font-awesome-icon icon="times" />
+                 Delete
                </b-button>
              </b-button-group>
            </div>
@@ -49,13 +53,13 @@ export default {
   created() {
     if (Session.isLoggedIn()) {
       this.canDeletePost = InfoService.hasPermission(Session.getUser(), 'delete_posts');
-
-      //if (this.post.username == InfoService.get)
     }
   },
   methods: {
     reply() {
       this.$emit('replyTo', this.user.username);
+
+      this.$scrollTo('#replyBox');
     },
     removePost() {
       this.$http.post('/api/private/posts/delete', {
@@ -72,7 +76,7 @@ export default {
     },
     askPostRemove() {
       this.$refs.removeModal.show();
-    },
+    }
   },
   components: {
     UserCard

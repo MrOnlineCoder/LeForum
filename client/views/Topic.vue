@@ -7,6 +7,7 @@
       <h2><b-badge>{{ category }}</b-badge> {{ topic.title }}</h2>
       <p>Topic is <span :class="getStatusColor">{{ getStatusText }}</span></p>
       <small>Topic has been started {{ topic.date | formatDateTime }} by <b>{{ topic.author }}</b></small>
+      <br>
       <div v-for="item in posts">
         <hr>
         <Post
