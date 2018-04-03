@@ -5,7 +5,6 @@ LeForum can be used as a discussion board for your project, community or website
 **Current project status:** in development, please wait for public release!
 
 # Features
-
 * Frontend is powered by [Vue.js](https://vuejs.org/) - fast and lightweight Javascript framework.
 * Meanwhile, backend is powered by popular Node.js web-server - [Express](http://expressjs.com/), combined with [mongoose](https://www.npmjs.com/package/mongoose) - object modeling tool for NoSQL database - the [MongoDB](https://www.mongodb.com/).
 * Forum has simple and minimalistic UI, heavily powered by [Bootstrap 4](https://getbootstrap.com/).
@@ -15,7 +14,6 @@ LeForum can be used as a discussion board for your project, community or website
 * and a lot of small other features!
 
 # Getting Started
-
 Installation of LeForum is fairly easy.
 
 ### Prerequisites
