@@ -47,3 +47,6 @@ export PORT=80
 node server.js
 ```
 * Browse to [localhost:3000/#/install](http://localhost:3000/#/install) to finish installation process in browser (replace 3000 with your port)
+
+
+### License: Apache License 2.0
