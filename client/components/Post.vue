@@ -11,7 +11,7 @@
            <div>
              <hr>
              <b-button-group>
-               <b-button variant="primary" size="sm" @click="like()">
+               <b-button variant="primary" size="sm" @click="like()" v-if="canLikePost">
                  <font-awesome-icon icon="thumbs-up" />
                  Like
                </b-button>
@@ -47,12 +47,14 @@ export default {
   data() {
     return {
       canDeletePost: false,
-      canModifyPost: false
+      canModifyPost: false,
+      canLikePost: false
     }
   },
   created() {
     if (Session.isLoggedIn()) {
       this.canDeletePost = InfoService.hasPermission(Session.getUser(), 'delete_posts');
+      this.canLikePost = InfoService.hasPermission(Session.getUser(), 'like') && this.post.author != Session.getUser().username;
     }
   },
   methods: {
@@ -60,6 +62,9 @@ export default {
       this.$emit('replyTo', this.user.username);
 
       this.$scrollTo('#replyBox');
+    },
+    like() {
+      
     },
     removePost() {
       this.$http.post('/api/private/posts/delete', {

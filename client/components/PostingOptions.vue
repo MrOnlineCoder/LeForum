@@ -2,7 +2,7 @@
   <div>
     <b-form-group label="Maximum post length (including HTML tags):">
       <b-form-input type="number"
-                    v-model="maxlength"
+                    v-model="options.maxlength"
                     required
                     placeholder="Enter topic title">
       </b-form-input>
@@ -42,7 +42,7 @@ export default {
     }
   },
   created() {
-    this.options = InfoService.get().postOptions;
+    //this.options = InfoService.get().postOptions;
   },
   components: {
     Editor

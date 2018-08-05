@@ -3,7 +3,7 @@
     "description": "Test",
     "userGroups": {
         "superadmin": {
-            "title": "Super Admin",
+            "title": "Head Admin",
             "color": "#F44336",
             "staff": true,
             "permission": [
@@ -78,13 +78,13 @@
             "writeLevel": 0
         }
     },
-    "brandURL": "http://placehold.it/60",
+    "brandURL": "http://placehold.it/70",
     "present": true,
     "categories": {
         "features": {
             "title": "Features Suggestions",
             "description": "Miss a feature in a LeForum? Let us know about it!",
-            "readLevel": 0,
+            "readLevel": "0",
             "writeLevel": 0
         },
         "bugs": {

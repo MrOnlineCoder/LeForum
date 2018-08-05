@@ -15,6 +15,7 @@
             <th scope="col">Color</th>
             <th scope="col">Is Staff</th>
             <th scope="col">Permissions</th>
+            <th scope="col">Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -24,13 +25,18 @@
             <td><p :style="{'color': groups[k].color}">Preview</p><input type="text" class="form-control" v-model="groups[k].color"></td>
             <td><input type="checkbox" v-model="groups[k].staff"></td>
             <td><b-button variant="primary" @click="openPermsModal(k)">Manage</b-button></td>
+            <td>
+              <b-button variant="danger" @click="removeGroup(k)">
+              <font-awesome-icon icon="times" />
+            </b-button>
+          </td>
             <!--<td><b-button variant="danger" @click="removeGroup(k)">Remove</b-button></td>-->
           </tr>
         </tbody>
       </table>
 
       <b-modal ref="permModal" title="Manage group permissions" :ok-only="true">
-        <div class="">
+        <div class="" v-if="editGroup">
             <p>{{editGroup}} can:</p>
             <b v-if="groups[editGroup].permission.includes('*')">Do everything and anything</b>
             <li v-if="!groups[editGroup].permission.includes('*')" v-for="v,k in actions">
@@ -54,6 +60,23 @@
           </label>
         </div>
       </b-modal>
+
+
+      <b-modal ref="removeModal" variant="danger" title="Remove user group" :ok-only="true">
+        <p>
+          Do you really want to remove <b>{{ removeGroup }}</b> group?
+
+          This action cannot be undone.
+        </p>
+
+        <p>
+          All users from this group must be moved to another. Please choose target one:
+
+          <select v-model="removeMigrateGroup">
+            <option v-for="o,g in groups" v-if="g != removeGroup">{{ g }}</option>
+          </select>
+        </p>
+      </b-modal>
       <b-button variant="success" size="lg" @click="save()">
         <font-awesome-icon icon="save" />
         Save permissions
@@ -75,9 +98,10 @@ export default {
   data() {
     return {
       groups: [],
-      editGroup: 'user',
+      editGroup: '',
       actions: {},
       hints: {},
+      removeGroup: '',
       ok: false
     }
   },
@@ -101,7 +125,8 @@ export default {
       this.$forceUpdate();
     },
     removeGroup(id) {
-      delete this.groups[id];
+      this.$delete(this.groups, id);
+      this.$forceUpdate();
     },
     permDescription(k) {
       return this.hints[k] || 'none';

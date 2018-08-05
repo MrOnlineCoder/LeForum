@@ -52,7 +52,8 @@ const PostSchema = new mongoose.Schema({
 const NotificationSchema = new mongoose.Schema({
  type: String, //like, mention, delete
  target: String,
- date: Date,
+ issuer: String,
+ data: String,
  data: String,
  topic: TopicSchema
 });

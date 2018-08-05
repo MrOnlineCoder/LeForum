@@ -98,7 +98,7 @@ router.post('/register', (req,res) => {
   data.bio = '';
   data.signature = '';
 
-  data.password = Utils.toSHA256(data.password);
+  data.password = Utils.hashPassword(data.password);
 
   UserService.exists(data.username, data.email, (ok, err) => {
     if (ok) {
@@ -148,7 +148,9 @@ router.post('/login', (req,res) => {
       return;
     }
 
-    winston.info('[AuthAPI] User '+email+' logged in.');
+    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    winston.info('[AuthAPI] User '+email+' logged in from IP '+ip);
 
     let token = generateToken(doc);
     res.json({

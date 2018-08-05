@@ -55,6 +55,18 @@ function remove(id, cb) {
   });
 }
 
+function get(id, cb) {
+  Post.findById(id, (err, doc) => {
+    if (err) {
+      winston.error('[PostService] Failed to find post by ID'+id+': '+JSON.stringify(err));
+      cb(false, null);
+      return;
+    }
+
+    cb(true, doc);
+  });
+}
+
 function getPostsForTopic(topic, cb) {
   Post.find({
     topic: topic
@@ -75,5 +87,6 @@ module.exports = {
   addPost,
   getPostsForTopic,
   removeTopicPosts,
+  get,
   remove
 };

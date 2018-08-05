@@ -9,6 +9,10 @@ const express = require('express');
 const AuthAPI = require('../../auth');
 const PostService = require('../../posts');
 const Permissions = require('../../permissions');
+const NotificationService = require('../../notifications');
+const UserService = require('../../user');
+
+const _ = require('lodash');
 
 let router = express.Router();
 
@@ -22,17 +26,30 @@ router.post('/delete', AuthAPI.privateAPI, (req,res) => {
     return;
   }
 
-  PostService.remove(req.body.id, (ok) => {
+  PostService.get(req.body.id, (ok, post) => {
     if (!ok) {
       res.json({
         success: false,
-        message: 'Cannot remove post.'
+        message: 'Failed to find post with given ID.'
       });
       return;
     }
 
-    res.json({
-      success: true
+    UserService.decreasePostCount(post.author);
+    NotificationService.notify(post.author, req.user.username, 'delete', _.truncate(post.content, {length: 100}), {});
+
+    PostService.remove(req.body.id, (ok2) => {
+      if (!ok2) {
+        res.json({
+          success: false,
+          message: 'Cannot remove post.'
+        });
+        return;
+      }
+
+      res.json({
+        success: true
+      });
     });
   });
 });

@@ -8,9 +8,14 @@
         <font-awesome-icon icon="envelope" />
         Post
       </b-button>
+      <br>
+      <br>
+      <b-alert variant="warning" :show="!!warn">
+        {{ warn }}
+      </b-alert>
     </b-card>
     <b-alert variant="danger" :show="!ok">
-      Error: {{ msg }}
+      {{ msg }}
     </b-alert>
   </div>
 </template>
@@ -24,12 +29,18 @@ export default {
     return {
       content: '',
       ok: false,
+      warn: '',
       msg: 'Loading...'
     }
   },
   props: ['topic', 'reply'],
   methods: {
     post() {
+      if (!this.content || this.content.length < 3) {
+        this.warn = 'Your post must be at least 3 characters in length!';
+        return;
+      }
+
       this.$http.post('/api/posts/add', {
         topic: this.topic._id,
         content: this.content,

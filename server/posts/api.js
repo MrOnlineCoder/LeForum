@@ -47,6 +47,10 @@ router.get('/forTopic/:id', (req,res) => {
   });
 });
 
+router.post('/like/:id', AuthAPI.privateAPI, (req,res) => {
+  //if (!perm)
+});
+
 router.post('/add', AuthAPI.privateAPI, (req,res) => {
   TopicService.getById(req.body.topic, (ok, topicDoc) => {
     if (!ok) {
@@ -84,7 +88,7 @@ router.post('/add', AuthAPI.privateAPI, (req,res) => {
 
       if (req.body.reply) {
         //Sent user a notification that he was mentioned
-        NotificationService.notify(req.body.reply, 'mention', req.user.username, topicDoc);
+        NotificationService.notify(req.body.reply, req.user.username, 'mention', '', topicDoc);
       }
 
       UserService.addPostCount(req.user.username);

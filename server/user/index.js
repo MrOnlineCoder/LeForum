@@ -81,6 +81,16 @@ function addPostCount(user, cb) {
   });
 }
 
+function decreasePostCount(user, cb) {
+  User.update({username: user}, {
+    $inc: {
+      posts: -1
+    }
+  }, (err) => {
+    if (cb) cb(!!err);
+  });
+}
+
 function addReputation(user, cb) {
   User.update({username: user}, {
     $inc: {
@@ -134,7 +144,7 @@ function usersFromList(arr, cb) {
 function getLoginUser(email, password, cb) {
   User.find({
     email: email,
-    password: Utils.toSHA256(password)
+    password: Utils.hashPassword(password)
   }, (err, docs) => {
     if (err) {
       winston.error('[UserService] Failed to find user login '+username+' / '+email+': '+err);
@@ -191,5 +201,6 @@ module.exports = {
   addPostCount,
   addReputation,
   usersFromList,
-  updateProfile
+  updateProfile,
+  decreasePostCount
 };

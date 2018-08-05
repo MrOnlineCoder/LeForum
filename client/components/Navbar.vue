@@ -89,6 +89,8 @@ export default {
     },
     sessionCallback() {
       this.isLoggedIn = Session.isLoggedIn();
+
+      this.username = Session.getUser().username;
     },
     fetchNotifications() {
       this.$http.get('/api/private/user/notifications?token='+Session.getToken()).then(resp => {

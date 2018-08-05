@@ -7,11 +7,12 @@
 const Notification = require('../db').Notification;
 const winston = require('winston');
 
-function notify(user, type, data, topic, cb) {
+function notify(user, issuer, type, data, topic, cb) {
   let obj = new Notification({
     target: user,
     type: type,
     data: data,
+    issuer: issuer,
     topic: topic,
     date: new Date()
   });

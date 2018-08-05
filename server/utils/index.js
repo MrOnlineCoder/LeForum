@@ -5,12 +5,12 @@
  * (c) MrOnlineCoder 2018
  */
 
-const shajs = require('sha.js');
+const crypto = require('crypto');
 
- function toSHA256(data) {
-   return shajs('sha256').update(data).digest('hex');
+ function hashPassword(data) {
+   return crypto.createHash('sha512').update(data).digest('hex');
  }
 
 module.exports = {
-  toSHA256
+  hashPassword
 };

@@ -35,8 +35,13 @@
           </h5>
           <p class="card-text">
             <div v-if="item.type == 'mention'">
-              <b>{{ item.data }}</b> replied to your post in
+              <b>{{ item.issuer }}</b> replied to your post in
               <a :href="'#/topic/'+item.topic._id">{{ item.topic.title }}</a>
+            </div>
+
+            <div v-if="item.type == 'delete'">
+              <b>{{ item.issuer }}</b> has deleted your post
+              <p class="lead" v-html="item.data"></p></a>
             </div>
           </p>
         </div>
